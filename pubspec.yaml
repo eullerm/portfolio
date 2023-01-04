@@ -12,8 +12,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^1.1.6
   flutter_localizations:
     sdk: flutter
+  intl: ^0.17.0
+  url_strategy: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +33,9 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+    - assets/icons/
+  
+  fonts:
+    - family:  PublicPixel
+      fonts:
+        - asset: assets/fonts/PublicPixel.ttf

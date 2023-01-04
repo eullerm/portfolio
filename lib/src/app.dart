@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'sample_feature/sample_item_details_view.dart';
-import 'sample_feature/sample_item_list_view.dart';
+import 'package:portfolio/src/pages/landing_page.dart';
 import 'settings/settings_controller.dart';
-import 'settings/settings_view.dart';
+import 'pages/settings.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -33,21 +31,37 @@ class MyApp extends StatelessWidget {
             Locale('pt', 'BR'),
           ],
           onGenerateTitle: (BuildContext context) => AppLocalizations.of(context)!.appTitle,
-          theme: ThemeData(),
-          darkTheme: ThemeData.dark(),
+          theme: ThemeData(
+            textTheme: const TextTheme(
+              headline1: TextStyle(fontSize: 80.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
+              headline2: TextStyle(fontSize: 30.0, fontFamily: 'PublicPixel', fontStyle: FontStyle.italic, color: Colors.black),
+              bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+              button: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.white),
+            ),
+            scaffoldBackgroundColor: Colors.black,
+          ),
+          darkTheme: ThemeData.dark().copyWith(
+            textTheme: const TextTheme(
+              headline1: TextStyle(fontSize: 80.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
+              headline2: TextStyle(fontSize: 30.0, fontFamily: 'PublicPixel', fontStyle: FontStyle.italic, color: Colors.black),
+              bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+              button: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.white),
+            ),
+            scaffoldBackgroundColor: Colors.red,
+          ),
           themeMode: settingsController.themeMode,
+          initialRoute: '/landing-page',
           onGenerateRoute: (RouteSettings routeSettings) {
             return MaterialPageRoute<void>(
               settings: routeSettings,
               builder: (BuildContext context) {
                 switch (routeSettings.name) {
+                  case LandingPage.routeName:
+                    return LandingPage();
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
-                  case SampleItemDetailsView.routeName:
-                    return const SampleItemDetailsView();
-                  case SampleItemListView.routeName:
                   default:
-                    return const SampleItemListView();
+                    return LandingPage();
                 }
               },
             );
