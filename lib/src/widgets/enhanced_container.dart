@@ -36,7 +36,7 @@ class EnhancedContainer extends StatelessWidget {
                     TextSpan(text: 'Euller Macena'),
                     style: Theme.of(context).textTheme.headline1,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Text.rich(

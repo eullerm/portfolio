@@ -47,7 +47,7 @@ class _LandingPageState extends State<LandingPage> {
                     style: Theme.of(context).textTheme.button,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 50,
                 ),
                 ElevatedButton(
