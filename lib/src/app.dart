@@ -5,18 +5,39 @@ import 'package:portfolio/src/pages/landing_page.dart';
 import 'settings/settings_controller.dart';
 import 'pages/settings.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  final SettingsController settingsController;
+
   const MyApp({
     super.key,
     required this.settingsController,
   });
 
-  final SettingsController settingsController;
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
+  late AnimationController _backgroundController;
+  late Animation<Offset> _backgroundAnimation;
+  @override
+  void initState() {
+    super.initState();
+    _backgroundController = AnimationController(vsync: this, duration: Duration(seconds: 10));
+    _backgroundAnimation = Tween<Offset>(begin: Offset.zero, end: Offset(-100, 0)).animate(_backgroundController);
+    _backgroundController.repeat();
+  }
+
+  @override
+  void dispose() {
+    _backgroundController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: settingsController,
+      animation: widget.settingsController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
           restorationScopeId: 'app',
@@ -49,7 +70,7 @@ class MyApp extends StatelessWidget {
             ),
             scaffoldBackgroundColor: Colors.red,
           ),
-          themeMode: settingsController.themeMode,
+          themeMode: widget.settingsController.themeMode,
           initialRoute: '/landing-page',
           onGenerateRoute: (RouteSettings routeSettings) {
             return PageRouteBuilder<void>(
@@ -77,14 +98,47 @@ class MyApp extends StatelessWidget {
                 Animation<double> secondaryAnimation,
               ) {
                 const double numberOfPages = 2;
-                switch (routeSettings.name) {
-                  case LandingPage.routeName:
-                    return const LandingPage(page: 1, numberOfPages: numberOfPages);
-                  case SettingsView.routeName:
-                    return SettingsView(controller: settingsController);
-                  default:
-                    return const LandingPage(page: 1, numberOfPages: numberOfPages);
-                }
+                return Stack(
+                  children: [
+                    Positioned(
+                      child: Image.asset(
+                        'assets/images/background.jpg',
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
+                    ),
+                    /* Positioned(
+                      child: AnimatedBuilder(
+                        animation: _backgroundAnimation,
+                        builder: (context, child) {
+                          return Transform.translate(
+                            offset: _backgroundAnimation.value,
+                            child: child,
+                          );
+                        },
+                        child: Image.asset(
+                          'assets/images/background.jpg',
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                      ),
+                    ), */
+                    Builder(
+                      builder: (BuildContext _) {
+                        switch (routeSettings.name) {
+                          case LandingPage.routeName:
+                            return const LandingPage(page: 1, numberOfPages: numberOfPages);
+                          case SettingsView.routeName:
+                            return SettingsView(controller: widget.settingsController);
+                          default:
+                            return const LandingPage(page: 1, numberOfPages: numberOfPages);
+                        }
+                      },
+                    ),
+                  ],
+                );
               },
             );
           },
