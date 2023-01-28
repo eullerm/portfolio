@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:portfolio/src/pages/about_me_page.dart';
 import 'package:portfolio/src/pages/landing_page.dart';
 import 'settings/settings_controller.dart';
 import 'pages/settings.dart';
@@ -56,7 +57,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             textTheme: const TextTheme(
               headline1: TextStyle(fontSize: 80.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
               headline2: TextStyle(fontSize: 30.0, fontFamily: 'PublicPixel', fontStyle: FontStyle.italic, color: Colors.black),
-              bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+              bodyText1: TextStyle(fontSize: 18.0, fontFamily: 'PublicPixel'),
+              bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'PublicPixel'),
               button: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.white),
             ),
             scaffoldBackgroundColor: Colors.black,
@@ -64,8 +66,10 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
           darkTheme: ThemeData.dark().copyWith(
             textTheme: const TextTheme(
               headline1: TextStyle(fontSize: 80.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
-              headline2: TextStyle(fontSize: 30.0, fontFamily: 'PublicPixel', fontStyle: FontStyle.italic, color: Colors.black),
-              bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+              headline2: TextStyle(fontSize: 50.0, fontFamily: 'PublicPixel', fontStyle: FontStyle.italic, color: Colors.black),
+              headline3: TextStyle(fontSize: 30.0, fontFamily: 'PublicPixel', fontStyle: FontStyle.italic, color: Colors.black),
+              bodyText1: TextStyle(fontSize: 18.0, fontFamily: 'PublicPixel'),
+              bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'PublicPixel'),
               button: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.white),
             ),
             scaffoldBackgroundColor: Colors.red,
@@ -76,8 +80,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             return PageRouteBuilder<void>(
               settings: routeSettings,
               fullscreenDialog: true,
-              transitionDuration: const Duration(milliseconds: 100),
-              reverseTransitionDuration: const Duration(milliseconds: 100),
+              transitionDuration: const Duration(milliseconds: 500),
+              reverseTransitionDuration: const Duration(milliseconds: 500),
               transitionsBuilder: (
                 BuildContext context,
                 Animation<double> animation,
@@ -97,17 +101,16 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                 Animation<double> animation,
                 Animation<double> secondaryAnimation,
               ) {
-                const double numberOfPages = 2;
+                const double numberOfPages = 3;
                 return Stack(
                   children: [
-                    Positioned(
-                      child: Image.asset(
-                        'assets/images/background.jpg',
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: double.infinity,
-                      ),
+                    Image.asset(
+                      'assets/images/background.jpg',
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
                     ),
+
                     /* Positioned(
                       child: AnimatedBuilder(
                         animation: _backgroundAnimation,
@@ -130,6 +133,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                         switch (routeSettings.name) {
                           case LandingPage.routeName:
                             return const LandingPage(page: 1, numberOfPages: numberOfPages);
+                          case AboutMe.routeName:
+                            return const AboutMe(page: 2, numberOfPages: numberOfPages);
                           case SettingsView.routeName:
                             return SettingsView(controller: widget.settingsController);
                           default:

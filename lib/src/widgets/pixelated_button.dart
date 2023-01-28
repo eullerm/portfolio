@@ -1,10 +1,22 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:portfolio/src/widgets/pixelated_clipper_square.dart';
 
 class PixelatedButton extends StatefulWidget {
   final String title;
   final Function()? onClick;
-  const PixelatedButton({super.key, this.title = '', this.onClick});
+  final double width;
+  final double height;
+  final double shadow;
+  const PixelatedButton({
+    super.key,
+    this.title = '',
+    this.onClick,
+    this.width = 200,
+    this.height = 80,
+    this.shadow = 1,
+  });
 
   @override
   State<PixelatedButton> createState() => _PixelatedButtonState();
@@ -48,24 +60,41 @@ class _PixelatedButtonState extends State<PixelatedButton> with SingleTickerProv
       },
       child: ScaleTransition(
         scale: _animation,
-        child: ClipPath(
-          clipper: PixelatedClipperSquare(
-            bottomRight: true,
-            topLeft: true,
-            bottomLeft: true,
-            topRight: true,
-          ),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(200.0, 80.0),
-              backgroundColor: Color(0xFF507335),
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            ClipPath(
+                clipper: PixelatedClipperSquare(
+                  bottomRight: true,
+                  topLeft: true,
+                  bottomLeft: true,
+                  topRight: true,
+                ),
+                child: Container(
+                  color: Colors.black,
+                  width: widget.width + widget.shadow,
+                  height: widget.height + widget.shadow,
+                )),
+            ClipPath(
+              clipper: PixelatedClipperSquare(
+                bottomRight: true,
+                topLeft: true,
+                bottomLeft: true,
+                topRight: true,
+              ),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(widget.width, widget.height),
+                  backgroundColor: Color(0xFF507335),
+                ),
+                onPressed: widget.onClick,
+                child: Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.button,
+                ),
+              ),
             ),
-            onPressed: widget.onClick,
-            child: Text(
-              widget.title,
-              style: Theme.of(context).textTheme.button,
-            ),
-          ),
+          ],
         ),
       ),
     );

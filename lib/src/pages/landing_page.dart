@@ -17,6 +17,11 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   bool startHoover = false;
   bool menuHoover = false;
+
+  void navigateTo(String path, {Object? arguments}) {
+    Navigator.pushNamed(context, path, arguments: arguments);
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -25,32 +30,67 @@ class _LandingPageState extends State<LandingPage> {
       width: size.width,
       height: size.height,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Lifebar(
-            percentOfLifebar: widget.page / widget.numberOfPages,
+          _header(),
+          Flexible(
+            flex: 3,
+            child: Align(
+              alignment: Alignment.center,
+              child: EnhancedContainer(
+                width: 1200,
+                height: 400,
+                header: Text.rich(
+                  TextSpan(text: 'Euller Macena'),
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                content: Text.rich(
+                  TextSpan(text: 'Desenvolvedor Full Stack'),
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+              ),
+            ),
           ),
-          const EnhancedContainer(
-            width: 1200,
-            height: 400,
+          Flexible(
+            flex: 1,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PixelatedButton(
+                    title: 'Start',
+                    onClick: () => navigateTo('/about-me'),
+                  ),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  PixelatedButton(
+                    title: 'Menu',
+                    onClick: () => print('menu'),
+                  ),
+                ],
+              ),
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              PixelatedButton(
-                title: 'Start',
-                onClick: () => print('start'),
-              ),
-              const SizedBox(
-                width: 50,
-              ),
-              PixelatedButton(
-                title: 'Menu',
-                onClick: () => print('menu'),
-              ),
-            ],
-          )
         ],
+      ),
+    );
+  }
+
+  Widget _header() {
+    return SizedBox(
+      height: 100,
+      child: Align(
+        alignment: Alignment.center,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Lifebar(
+              percentOfLifebar: widget.page / widget.numberOfPages,
+            ),
+          ],
+        ),
       ),
     );
   }

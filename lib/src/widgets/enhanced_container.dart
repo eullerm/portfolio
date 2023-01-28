@@ -3,22 +3,24 @@ import 'package:flutter/material.dart';
 class EnhancedContainer extends StatelessWidget {
   final double width;
   final double height;
-
-  const EnhancedContainer({super.key, required this.width, required this.height});
+  final Widget? header;
+  final Widget? content;
+  final double shadow;
+  const EnhancedContainer({super.key, required this.width, required this.height, this.header, this.content, this.shadow = 16});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width + 16,
-      height: height + 16,
+      width: width + shadow,
+      height: height + shadow,
       child: Stack(
         children: [
           Positioned(
-            top: 8,
-            left: 8,
+            top: shadow / 2,
+            left: shadow / 2,
             child: Container(
-              width: width + 8,
-              height: height + 8,
+              width: width + shadow / 2,
+              height: height + shadow / 2,
               color: Color(0xFF507335),
             ),
           ),
@@ -32,17 +34,11 @@ class EnhancedContainer extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text.rich(
-                    TextSpan(text: 'Euller Macena'),
-                    style: Theme.of(context).textTheme.headline1,
+                  SizedBox(child: header),
+                  SizedBox(
+                    height: (header != null && content != null) ? 50 : 0,
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Text.rich(
-                    TextSpan(text: 'Desenvolvedor Full Stack'),
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
+                  SizedBox(child: content),
                 ],
               ),
             ),
