@@ -20,34 +20,37 @@ class Lifebar extends StatelessWidget {
       positionOfLifebar = life - (lifebarSize - 15);
     }
 
-    return SizedBox(
-      width: 300,
-      height: 40,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Positioned(
-            left: 15,
-            child: _backgroundLifebar(lifebarSize: lifebarSize),
-          ),
-          // Doesn't show the overflow of lifebar to the left
-          Positioned(
-            left: positionOfLifebar,
-            child: _lifebar(lifebarSize: lifebarSize),
-          ),
-          Positioned(
-            left: 0,
-            child: Container(
-              width: 20,
-              height: 40,
-              color: Colors.black,
+    return Hero(
+      tag: 'lifebar',
+      child: SizedBox(
+        width: 300,
+        height: 40,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              left: 15,
+              child: _backgroundLifebar(lifebarSize: lifebarSize),
             ),
-          ),
-          Positioned(
-            left: 0,
-            child: SvgPicture.asset(heartIcon, width: 40, height: 40),
-          ),
-        ],
+            // Doesn't show the overflow of lifebar to the left
+            Positioned(
+              left: positionOfLifebar,
+              child: _lifebar(lifebarSize: lifebarSize),
+            ),
+            Positioned(
+              left: 0,
+              child: Container(
+                width: 20,
+                height: 40,
+                color: Colors.black,
+              ),
+            ),
+            Positioned(
+              left: 0,
+              child: SvgPicture.asset(heartIcon, width: 40, height: 40),
+            ),
+          ],
+        ),
       ),
     );
   }

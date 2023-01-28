@@ -52,16 +52,38 @@ class MyApp extends StatelessWidget {
           themeMode: settingsController.themeMode,
           initialRoute: '/landing-page',
           onGenerateRoute: (RouteSettings routeSettings) {
-            return MaterialPageRoute<void>(
+            return PageRouteBuilder<void>(
               settings: routeSettings,
-              builder: (BuildContext context) {
+              fullscreenDialog: true,
+              transitionDuration: const Duration(milliseconds: 100),
+              reverseTransitionDuration: const Duration(milliseconds: 100),
+              transitionsBuilder: (
+                BuildContext context,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+                Widget child,
+              ) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0.0, 1.0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                );
+              },
+              pageBuilder: (
+                BuildContext context,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+              ) {
+                const double numberOfPages = 2;
                 switch (routeSettings.name) {
                   case LandingPage.routeName:
-                    return LandingPage();
+                    return const LandingPage(page: 1, numberOfPages: numberOfPages);
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   default:
-                    return LandingPage();
+                    return const LandingPage(page: 1, numberOfPages: numberOfPages);
                 }
               },
             );

@@ -5,7 +5,10 @@ import 'package:portfolio/src/widgets/pixelated_clipper_square.dart';
 
 class LandingPage extends StatefulWidget {
   static const routeName = '/landing-page';
-  const LandingPage({super.key});
+  final Object? arguments;
+  final double page;
+  final double numberOfPages;
+  const LandingPage({super.key, this.arguments, required this.page, required this.numberOfPages});
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -24,7 +27,9 @@ class _LandingPageState extends State<LandingPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Lifebar(),
+            Lifebar(
+              percentOfLifebar: widget.page / widget.numberOfPages,
+            ),
             const EnhancedContainer(
               width: 1200,
               height: 400,
