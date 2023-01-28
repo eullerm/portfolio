@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/src/widgets/enhanced_container.dart';
 import 'package:portfolio/src/widgets/lifebar.dart';
+import 'package:portfolio/src/widgets/pixelated_button.dart';
 import 'package:portfolio/src/widgets/pixelated_clipper_square.dart';
 
 class LandingPage extends StatefulWidget {
@@ -15,6 +16,8 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  bool startHoover = false;
+  bool menuHoover = false;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -37,36 +40,16 @@ class _LandingPageState extends State<LandingPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ClipPath(
-                  clipper: PixelatedClipperSquare(),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(200.0, 80.0),
-                      backgroundColor: Color(0xFF507335),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      'Start',
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                  ),
+                PixelatedButton(
+                  title: 'Start',
+                  onClick: () => print('start'),
                 ),
                 const SizedBox(
                   width: 50,
                 ),
-                ClipPath(
-                  clipper: PixelatedClipperSquare(),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(200.0, 80.0),
-                      backgroundColor: Color(0xFF507335),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      'Menu',
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                  ),
+                PixelatedButton(
+                  title: 'Menu',
+                  onClick: () => print('menu'),
                 ),
               ],
             )
