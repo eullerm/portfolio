@@ -46,7 +46,11 @@ class Lifebar extends StatelessWidget {
             ),
             Positioned(
               left: 0,
-              child: SvgPicture.asset(heartIcon, width: 40, height: 40),
+              child: SvgPicture.asset(
+                heartIcon,
+                width: 40,
+                height: 40,
+              ),
             ),
           ],
         ),
@@ -67,7 +71,7 @@ class Lifebar extends StatelessWidget {
           child: Container(
             color: Colors.black,
             height: 30.0,
-            width: lifebarSize + 5,
+            width: lifebarSize + 6,
           ),
         ),
         ClipPath(
@@ -99,7 +103,7 @@ class Lifebar extends StatelessWidget {
           child: Container(
             color: Colors.black,
             height: 30.0,
-            width: lifebarSize + 5,
+            width: lifebarSize + 6,
           ),
         ),
         ClipPath(

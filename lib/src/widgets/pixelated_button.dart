@@ -64,17 +64,18 @@ class _PixelatedButtonState extends State<PixelatedButton> with SingleTickerProv
           alignment: AlignmentDirectional.center,
           children: [
             ClipPath(
-                clipper: PixelatedClipperSquare(
-                  bottomRight: true,
-                  topLeft: true,
-                  bottomLeft: true,
-                  topRight: true,
-                ),
-                child: Container(
-                  color: Colors.black,
-                  width: widget.width + widget.shadow,
-                  height: widget.height + widget.shadow,
-                )),
+              clipper: PixelatedClipperSquare(
+                bottomRight: true,
+                topLeft: true,
+                bottomLeft: true,
+                topRight: true,
+              ),
+              child: Container(
+                color: Colors.black,
+                width: widget.width + widget.shadow,
+                height: widget.height + widget.shadow,
+              ),
+            ),
             ClipPath(
               clipper: PixelatedClipperSquare(
                 bottomRight: true,

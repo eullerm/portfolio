@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/src/widgets/enhanced_container.dart';
+import 'package:portfolio/src/widgets/header.dart';
 import 'package:portfolio/src/widgets/lifebar.dart';
 import 'package:portfolio/src/widgets/pixelated_button.dart';
 
@@ -25,69 +26,60 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Container(
-      padding: const EdgeInsets.all(50),
-      width: size.width,
-      height: size.height,
-      child: Column(
-        children: [
-          _header(),
-          Flexible(
-            flex: 3,
-            child: Align(
-              alignment: Alignment.center,
-              child: EnhancedContainer(
-                width: 1200,
-                height: 400,
-                header: Text.rich(
-                  TextSpan(text: 'Euller Macena'),
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                content: Text.rich(
-                  TextSpan(text: 'Desenvolvedor Full Stack'),
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PixelatedButton(
-                    title: 'Start',
-                    onClick: () => navigateTo('/about-me'),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  PixelatedButton(
-                    title: 'Menu',
-                    onClick: () => print('menu'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100),
+        child: Header(
+          page: widget.page,
+          numberOfPages: widget.numberOfPages,
+          leftButtonPath: '',
+          rightButtonPath: '',
+          needLeftButton: false,
+          needRightButton: false,
+        ),
       ),
-    );
-  }
-
-  Widget _header() {
-    return SizedBox(
-      height: 100,
-      child: Align(
-        alignment: Alignment.center,
+      body: Container(
+        padding: const EdgeInsets.all(50),
+        child: Align(
+          alignment: Alignment.center,
+          child: EnhancedContainer(
+            width: 1200,
+            height: 400,
+            header: RichText(
+              text: TextSpan(
+                text: 'Euller Macena',
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+            ),
+            content: RichText(
+              text: TextSpan(
+                text: 'Desenvolvedor Full Stack',
+                style: Theme.of(context).textTheme.displaySmall,
+              ),
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 200,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Lifebar(
-              percentOfLifebar: widget.page / widget.numberOfPages,
+            Container(
+              padding: EdgeInsets.all(16),
+              child: PixelatedButton(
+                title: 'Start',
+                onClick: () => navigateTo('/about-me'),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              child: PixelatedButton(
+                title: 'Menu',
+                onClick: () => print('menu'),
+              ),
             ),
           ],
         ),
