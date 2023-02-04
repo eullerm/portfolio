@@ -25,7 +25,6 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
@@ -33,8 +32,6 @@ class _LandingPageState extends State<LandingPage> {
         child: Header(
           page: widget.page,
           numberOfPages: widget.numberOfPages,
-          leftButtonPath: '',
-          rightButtonPath: '',
           needLeftButton: false,
           needRightButton: false,
         ),

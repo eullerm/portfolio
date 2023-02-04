@@ -28,7 +28,6 @@ class _AboutMeState extends State<AboutMe> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
@@ -37,7 +36,7 @@ class _AboutMeState extends State<AboutMe> {
           page: widget.page,
           numberOfPages: widget.numberOfPages,
           leftButtonPath: '',
-          rightButtonPath: '',
+          rightButtonPath: '/experiences',
         ),
       ),
       body: Container(
@@ -48,7 +47,7 @@ class _AboutMeState extends State<AboutMe> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               EnhancedContainer(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 width: 650,
                 height: 600,
                 header: Container(

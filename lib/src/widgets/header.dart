@@ -13,8 +13,8 @@ class Header extends StatefulWidget {
     super.key,
     required this.page,
     required this.numberOfPages,
-    required this.leftButtonPath,
-    required this.rightButtonPath,
+    this.leftButtonPath = '',
+    this.rightButtonPath = '',
     this.needLeftButton = true,
     this.needRightButton = true,
   });
