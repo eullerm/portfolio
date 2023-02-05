@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/src/widgets/enhanced_card.dart';
 import 'package:portfolio/src/widgets/enhanced_container.dart';
 import 'package:portfolio/src/widgets/header.dart';
+import 'package:portfolio/src/widgets/pixelated_button.dart';
 
 class Experiences extends StatefulWidget {
   static const routeName = '/experiences';
@@ -115,10 +116,19 @@ class _ExperiencesState extends State<Experiences> {
                     children: currentData
                         .map(
                           (experience) => EnhancedCard(
-                            height: 500,
+                            height: 600,
                             width: 500,
                             header: Row(
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  child: Image.asset(
+                                    'assets/icons/trophy.png',
+                                    fit: BoxFit.scaleDown,
+                                    width: 40,
+                                    height: 40,
+                                  ),
+                                ),
                                 SelectableText.rich(
                                   TextSpan(
                                     text: experience['local'],
@@ -127,26 +137,39 @@ class _ExperiencesState extends State<Experiences> {
                                 ),
                               ],
                             ),
-                            content: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: 8.0),
-                                  Text(experience['description']),
-                                  SizedBox(height: 8.0),
-                                  ...experience['listOfDescription'].map((e) => SelectableText.rich(
-                                        TextSpan(
-                                          text: '\n* ${e}',
-                                          style: Theme.of(context).textTheme.bodyMedium,
-                                        ),
-                                      )),
-                                  SizedBox(height: 8.0),
-                                  Text(
-                                    '${experience['startDate']} - ${experience['endDate'] ?? 'Atualmente'}',
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 8.0),
+                                Text(experience['description']),
+                                SizedBox(height: 8.0),
+                                ...experience['listOfDescription'].map(
+                                  (e) => SelectableText.rich(
+                                    TextSpan(
+                                      text: '\n* ${e}',
+                                      style: Theme.of(context).textTheme.bodyMedium,
+                                    ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
+                            ),
+                            footer: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${experience['startDate']}\n${experience['endDate'] ?? 'Atualmente'}',
+                                ),
+                                Opacity(
+                                  opacity: experience['seeMore'] != null ? 1 : 0,
+                                  child: PixelatedButton(
+                                    width: 160,
+                                    height: 50,
+                                    title: 'Veja mais',
+                                    onClick: () => navigateTo(experience['seeMore']),
+                                    style: Theme.of(context).textTheme.labelSmall,
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         )

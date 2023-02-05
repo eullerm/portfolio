@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:portfolio/src/widgets/pixelated_clipper_square.dart';
 
@@ -9,6 +7,7 @@ class PixelatedButton extends StatefulWidget {
   final double width;
   final double height;
   final double shadow;
+  final TextStyle? style;
   const PixelatedButton({
     super.key,
     this.title = '',
@@ -16,6 +15,7 @@ class PixelatedButton extends StatefulWidget {
     this.width = 200,
     this.height = 80,
     this.shadow = 1,
+    this.style,
   });
 
   @override
@@ -91,7 +91,7 @@ class _PixelatedButtonState extends State<PixelatedButton> with SingleTickerProv
                 onPressed: widget.onClick,
                 child: Text(
                   widget.title,
-                  style: Theme.of(context).textTheme.button,
+                  style: widget.style ?? Theme.of(context).textTheme.labelLarge,
                 ),
               ),
             ),

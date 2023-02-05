@@ -40,6 +40,7 @@ class _LandingPageState extends State<LandingPage> {
         child: EnhancedCard(
           width: 1200,
           height: 400,
+          mainAxisAlignment: MainAxisAlignment.center,
           header: SelectableText.rich(
             textAlign: TextAlign.justify,
             TextSpan(

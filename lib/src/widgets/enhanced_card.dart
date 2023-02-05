@@ -5,6 +5,7 @@ class EnhancedCard extends StatelessWidget {
   final double height;
   final Widget? header;
   final Widget? content;
+  final Widget? footer;
   final double shadow;
   final EdgeInsetsGeometry? margin;
   final MainAxisAlignment mainAxisAlignment;
@@ -14,6 +15,7 @@ class EnhancedCard extends StatelessWidget {
     required this.height,
     this.header,
     this.content,
+    this.footer,
     this.shadow = 16,
     this.margin,
     this.mainAxisAlignment = MainAxisAlignment.start,
@@ -48,10 +50,15 @@ class EnhancedCard extends StatelessWidget {
                   mainAxisAlignment: mainAxisAlignment,
                   children: [
                     Padding(padding: header != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0), child: header),
-                    SizedBox(
-                      height: (header != null && content != null) ? 50 : 0,
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(padding: content != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0), child: content),
+                          Padding(padding: footer != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0), child: footer),
+                        ],
+                      ),
                     ),
-                    SizedBox(child: content),
                   ],
                 ),
               ),
