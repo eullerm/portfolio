@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/src/widgets/enhanced_card.dart';
 import 'package:portfolio/src/widgets/enhanced_container.dart';
 import 'package:portfolio/src/widgets/header.dart';
 
@@ -14,6 +15,50 @@ class Experiences extends StatefulWidget {
 }
 
 class _ExperiencesState extends State<Experiences> {
+  List<Map> experiencesData = [
+    {
+      'local': 'Pibit',
+      'description': 'Realizei todas as etapas do desenvolvimento de um aplicativo, tais como:',
+      'listOfDescription': [
+        'Estruturação das ideias;',
+        'Especificação do aplicativo;',
+        'Escolha da tecnologia;',
+        'Desenvolvimento;',
+        'Prototipação;',
+        'Testes.',
+      ],
+      'startDate': 'Out de 2019',
+      'endDate': 'Out de 2021',
+      'seeMore': '/pibit'
+    },
+    {
+      'local': 'Exablack',
+      'description': 'Atuei em e-commerces que utilizavam phtml e magento, realizando:',
+      'listOfDescription': [
+        'Desenvolvimento;',
+        'Manutenção;',
+        'Testes;',
+        'Suporte técnico.',
+      ],
+      'startDate': 'Nov de 2020',
+      'endDate': 'Jul de 2021',
+      'seeMore': null
+    },
+    {
+      'local': 'Wikki Brasil',
+      'description': 'Atuo no desenvolvendo full stack de aplicações web com tecnologias como:',
+      'listOfDescription': [
+        'React.js;',
+        'Typescript;',
+        'Mongodb;',
+        'Next.js.',
+      ],
+      'startDate': 'Jan de 2022',
+      'endDate': null,
+      'seeMore': null
+    },
+  ];
+
   void navigateTo(String path, {Object? arguments}) {
     if (path.isNotEmpty) {
       Navigator.pushNamed(context, path, arguments: arguments);
@@ -31,7 +76,7 @@ class _ExperiencesState extends State<Experiences> {
         child: Header(
           page: widget.page,
           numberOfPages: widget.numberOfPages,
-          leftButtonPath: '/about-me',
+          leftButtonPath: '',
           rightButtonPath: '/skills',
         ),
       ),
@@ -45,10 +90,13 @@ class _ExperiencesState extends State<Experiences> {
               child: EnhancedContainer(
                 width: 1200,
                 height: 100,
-                header: RichText(
-                  text: TextSpan(
-                    text: 'Experiências',
-                    style: Theme.of(context).textTheme.displayMedium,
+                child: Center(
+                  child: SelectableText.rich(
+                    textAlign: TextAlign.justify,
+                    TextSpan(
+                      text: 'Experiências',
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
                   ),
                 ),
               ),
@@ -56,59 +104,57 @@ class _ExperiencesState extends State<Experiences> {
             Container(
               height: MediaQuery.of(context).size.height - kToolbarHeight - 250,
               alignment: Alignment.center,
-              child: SingleChildScrollView(
-                child: Wrap(
-                  spacing: 32,
-                  runSpacing: 32,
-                  children: [
-                    EnhancedContainer(
-                      padding: const EdgeInsets.all(16),
-                      width: 500,
-                      height: 600,
-                      content: Center(
-                        child: Image.asset(
-                          'assets/images/euller.jpg',
-                          height: 550,
-                        ),
-                      ),
-                    ),
-                    EnhancedContainer(
-                      padding: const EdgeInsets.all(16),
-                      width: 500,
-                      height: 600,
-                      content: Center(
-                        child: Image.asset(
-                          'assets/images/euller.jpg',
-                          height: 550,
-                        ),
-                      ),
-                    ),
-                    EnhancedContainer(
-                      padding: const EdgeInsets.all(16),
-                      width: 500,
-                      height: 600,
-                      content: Center(
-                        child: Image.asset(
-                          'assets/images/euller.jpg',
-                          height: 550,
-                        ),
-                      ),
-                    ),
-                    EnhancedContainer(
-                      padding: const EdgeInsets.all(16),
-                      width: 500,
-                      height: 600,
-                      content: Center(
-                        child: Image.asset(
-                          'assets/images/euller.jpg',
-                          height: 550,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              child: ListView.builder(
+                itemCount: (experiencesData.length / 3).ceil(),
+                itemBuilder: (BuildContext context, int index) {
+                  int startIndex = index * 3;
+                  int endIndex = startIndex + 3;
+                  List<Map> currentData = experiencesData.sublist(startIndex, endIndex > experiencesData.length ? experiencesData.length : endIndex);
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: currentData
+                        .map(
+                          (experience) => EnhancedCard(
+                            height: 500,
+                            width: 500,
+                            header: Row(
+                              children: [
+                                SelectableText.rich(
+                                  TextSpan(
+                                    text: experience['local'],
+                                    style: Theme.of(context).textTheme.displaySmall,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            content: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 8.0),
+                                  Text(experience['description']),
+                                  SizedBox(height: 8.0),
+                                  ...experience['listOfDescription'].map((e) => SelectableText.rich(
+                                        TextSpan(
+                                          text: '\n* ${e}',
+                                          style: Theme.of(context).textTheme.bodyMedium,
+                                        ),
+                                      )),
+                                  SizedBox(height: 8.0),
+                                  Text(
+                                    '${experience['startDate']} - ${experience['endDate'] ?? 'Atualmente'}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  );
+                },
               ),
-            ),
+            )
           ],
         ),
       ),

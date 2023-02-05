@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/src/widgets/enhanced_card.dart';
 import 'package:portfolio/src/widgets/enhanced_container.dart';
 import 'package:portfolio/src/widgets/header.dart';
 import 'package:portfolio/src/widgets/pixelated_button.dart';
@@ -46,14 +47,15 @@ class _AboutMeState extends State<AboutMe> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              EnhancedContainer(
-                padding: const EdgeInsets.all(16),
+              EnhancedCard(
+                margin: const EdgeInsets.all(16),
                 width: 650,
                 height: 600,
                 header: Container(
                   padding: const EdgeInsets.all(20),
-                  child: RichText(
-                    text: TextSpan(
+                  child: SelectableText.rich(
+                    textAlign: TextAlign.justify,
+                    TextSpan(
                       text: 'Sobre mim',
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
@@ -65,9 +67,9 @@ class _AboutMeState extends State<AboutMe> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RichText(
+                      SelectableText.rich(
                         textAlign: TextAlign.justify,
-                        text: TextSpan(
+                        TextSpan(
                           children: [
                             TextSpan(
                               text:
@@ -102,10 +104,10 @@ class _AboutMeState extends State<AboutMe> {
                 ),
               ),
               EnhancedContainer(
-                padding: EdgeInsets.all(16),
+                margin: const EdgeInsets.all(16),
                 width: 600,
                 height: 600,
-                content: Center(
+                child: Center(
                   child: Image.asset(
                     'assets/images/euller.jpg',
                     height: 550,

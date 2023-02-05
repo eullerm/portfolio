@@ -31,7 +31,7 @@ class _SkillsState extends State<Skills> {
         child: Header(
           page: widget.page,
           numberOfPages: widget.numberOfPages,
-          leftButtonPath: '/experiences',
+          leftButtonPath: '',
           rightButtonPath: '',
         ),
       ),
@@ -43,10 +43,10 @@ class _SkillsState extends State<Skills> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               EnhancedContainer(
-                padding: EdgeInsets.all(16),
+                margin: EdgeInsets.all(16),
                 width: 600,
                 height: 600,
-                content: Center(
+                child: Center(
                   child: Image.asset(
                     'assets/images/euller.jpg',
                     height: 550,

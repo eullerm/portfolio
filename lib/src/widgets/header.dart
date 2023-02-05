@@ -100,9 +100,9 @@ class _HeaderState extends State<Header> with TickerProviderStateMixin {
                     width: widget.needLeftButton ? 60 : 0,
                     height: widget.needLeftButton ? 60 : 0,
                     shadow: 8,
-                    content: Image.asset(
+                    child: Image.asset(
                       'assets/images/LeftButton.png',
-                      fit: BoxFit.cover,
+                      fit: BoxFit.scaleDown,
                       width: 40,
                       height: 40,
                     ),
@@ -132,9 +132,9 @@ class _HeaderState extends State<Header> with TickerProviderStateMixin {
                     width: widget.needRightButton ? 60 : 0,
                     height: widget.needRightButton ? 60 : 0,
                     shadow: 8,
-                    content: Image.asset(
+                    child: Image.asset(
                       'assets/images/RightButton.png',
-                      fit: BoxFit.cover,
+                      fit: BoxFit.scaleDown,
                       width: 40,
                       height: 40,
                     ),

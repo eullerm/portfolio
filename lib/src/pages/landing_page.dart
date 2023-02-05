@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/src/widgets/enhanced_container.dart';
+import 'package:portfolio/src/widgets/enhanced_card.dart';
 import 'package:portfolio/src/widgets/header.dart';
-import 'package:portfolio/src/widgets/lifebar.dart';
 import 'package:portfolio/src/widgets/pixelated_button.dart';
 
 class LandingPage extends StatefulWidget {
@@ -36,24 +35,23 @@ class _LandingPageState extends State<LandingPage> {
           needRightButton: false,
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(50),
-        child: Align(
-          alignment: Alignment.center,
-          child: EnhancedContainer(
-            width: 1200,
-            height: 400,
-            header: RichText(
-              text: TextSpan(
-                text: 'Euller Macena',
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
+      body: Align(
+        alignment: Alignment.center,
+        child: EnhancedCard(
+          width: 1200,
+          height: 400,
+          header: SelectableText.rich(
+            textAlign: TextAlign.justify,
+            TextSpan(
+              text: 'Euller Macena',
+              style: Theme.of(context).textTheme.displayLarge,
             ),
-            content: RichText(
-              text: TextSpan(
-                text: 'Desenvolvedor Full Stack',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
+          ),
+          content: SelectableText.rich(
+            textAlign: TextAlign.justify,
+            TextSpan(
+              text: 'Desenvolvedor Full Stack',
+              style: Theme.of(context).textTheme.displaySmall,
             ),
           ),
         ),
@@ -65,14 +63,14 @@ class _LandingPageState extends State<LandingPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: PixelatedButton(
                 title: 'Start',
                 onClick: () => navigateTo('/about-me'),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: PixelatedButton(
                 title: 'Menu',
                 onClick: () => print('menu'),

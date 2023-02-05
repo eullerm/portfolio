@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 
-class EnhancedContainer extends StatelessWidget {
+class EnhancedCard extends StatelessWidget {
   final double width;
   final double height;
-  final Widget? child;
+  final Widget? header;
+  final Widget? content;
   final double shadow;
   final EdgeInsetsGeometry? margin;
   final MainAxisAlignment mainAxisAlignment;
-  const EnhancedContainer({
+  const EnhancedCard({
     super.key,
     required this.width,
     required this.height,
-    this.child,
+    this.header,
+    this.content,
     this.shadow = 16,
     this.margin,
-    this.mainAxisAlignment = MainAxisAlignment.center,
+    this.mainAxisAlignment = MainAxisAlignment.start,
   });
 
   @override
@@ -32,7 +34,7 @@ class EnhancedContainer extends StatelessWidget {
               child: Container(
                 width: width + shadow / 2,
                 height: height + shadow / 2,
-                color: Color(0xFF507335),
+                color: const Color(0xFF507335),
               ),
             ),
             Positioned(
@@ -41,8 +43,17 @@ class EnhancedContainer extends StatelessWidget {
               child: Container(
                 width: width,
                 height: height,
-                color: Color(0xFFFFFFFF),
-                child: child,
+                color: const Color(0xFFFFFFFF),
+                child: Column(
+                  mainAxisAlignment: mainAxisAlignment,
+                  children: [
+                    Padding(padding: header != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0), child: header),
+                    SizedBox(
+                      height: (header != null && content != null) ? 50 : 0,
+                    ),
+                    SizedBox(child: content),
+                  ],
+                ),
               ),
             ),
           ],
