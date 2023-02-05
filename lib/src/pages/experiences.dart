@@ -54,57 +54,59 @@ class _ExperiencesState extends State<Experiences> {
               ),
             ),
             Container(
-              height: 500,
+              height: MediaQuery.of(context).size.height - kToolbarHeight - 250,
               alignment: Alignment.center,
-              color: Colors.black,
-              child: GridView.count(
-                crossAxisCount: 3,
-                children: [
-                  EnhancedContainer(
-                    padding: const EdgeInsets.all(16),
-                    width: 500,
-                    height: 600,
-                    content: Center(
-                      child: Image.asset(
-                        'assets/images/euller.jpg',
-                        height: 550,
+              child: SingleChildScrollView(
+                child: Wrap(
+                  spacing: 32,
+                  runSpacing: 32,
+                  children: [
+                    EnhancedContainer(
+                      padding: const EdgeInsets.all(16),
+                      width: 500,
+                      height: 600,
+                      content: Center(
+                        child: Image.asset(
+                          'assets/images/euller.jpg',
+                          height: 550,
+                        ),
                       ),
                     ),
-                  ),
-                  EnhancedContainer(
-                    padding: const EdgeInsets.all(16),
-                    width: 500,
-                    height: 600,
-                    content: Center(
-                      child: Image.asset(
-                        'assets/images/euller.jpg',
-                        height: 550,
+                    EnhancedContainer(
+                      padding: const EdgeInsets.all(16),
+                      width: 500,
+                      height: 600,
+                      content: Center(
+                        child: Image.asset(
+                          'assets/images/euller.jpg',
+                          height: 550,
+                        ),
                       ),
                     ),
-                  ),
-                  EnhancedContainer(
-                    padding: const EdgeInsets.all(16),
-                    width: 500,
-                    height: 600,
-                    content: Center(
-                      child: Image.asset(
-                        'assets/images/euller.jpg',
-                        height: 550,
+                    EnhancedContainer(
+                      padding: const EdgeInsets.all(16),
+                      width: 500,
+                      height: 600,
+                      content: Center(
+                        child: Image.asset(
+                          'assets/images/euller.jpg',
+                          height: 550,
+                        ),
                       ),
                     ),
-                  ),
-                  EnhancedContainer(
-                    padding: const EdgeInsets.all(16),
-                    width: 500,
-                    height: 600,
-                    content: Center(
-                      child: Image.asset(
-                        'assets/images/euller.jpg',
-                        height: 550,
+                    EnhancedContainer(
+                      padding: const EdgeInsets.all(16),
+                      width: 500,
+                      height: 600,
+                      content: Center(
+                        child: Image.asset(
+                          'assets/images/euller.jpg',
+                          height: 550,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
