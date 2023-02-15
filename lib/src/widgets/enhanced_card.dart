@@ -49,13 +49,22 @@ class EnhancedCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: mainAxisAlignment,
                   children: [
-                    Padding(padding: header != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0), child: header),
+                    Padding(
+                      padding: header != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0),
+                      child: header,
+                    ),
                     Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: header != null ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
                         children: [
-                          Padding(padding: content != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0), child: content),
-                          Padding(padding: footer != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0), child: footer),
+                          Padding(
+                            padding: content != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0),
+                            child: content,
+                          ),
+                          Padding(
+                            padding: footer != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0),
+                            child: footer,
+                          ),
                         ],
                       ),
                     ),

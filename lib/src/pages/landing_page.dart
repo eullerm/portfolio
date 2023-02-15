@@ -41,14 +41,14 @@ class _LandingPageState extends State<LandingPage> {
           width: 1200,
           height: 400,
           mainAxisAlignment: MainAxisAlignment.center,
-          header: SelectableText.rich(
+          content: SelectableText.rich(
             textAlign: TextAlign.justify,
             TextSpan(
               text: 'Euller Macena',
               style: Theme.of(context).textTheme.displayLarge,
             ),
           ),
-          content: SelectableText.rich(
+          footer: SelectableText.rich(
             textAlign: TextAlign.justify,
             TextSpan(
               text: 'Desenvolvedor Full Stack',

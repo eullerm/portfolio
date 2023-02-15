@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:portfolio/src/pages/about_me_page.dart';
 import 'package:portfolio/src/pages/experiences.dart';
 import 'package:portfolio/src/pages/landing_page.dart';
+import 'package:portfolio/src/pages/portfolio_code.dart';
 import 'package:portfolio/src/pages/skills.dart';
 import 'settings/settings_controller.dart';
 import 'pages/settings.dart';
@@ -56,6 +57,11 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
           ],
           onGenerateTitle: (BuildContext context) => AppLocalizations.of(context)!.appTitle,
           theme: ThemeData(
+            scrollbarTheme: ScrollbarThemeData(
+              thumbColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
+                return const Color(0xFF507335);
+              }),
+            ),
             textTheme: const TextTheme(
               displayLarge: TextStyle(fontSize: 80.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
               displayMedium: TextStyle(fontSize: 30.0, fontFamily: 'PublicPixel', color: Colors.black),
@@ -69,6 +75,11 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             scaffoldBackgroundColor: Colors.transparent,
           ),
           darkTheme: ThemeData.dark().copyWith(
+            scrollbarTheme: ScrollbarThemeData(
+              thumbColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
+                return const Color(0xFF507335);
+              }),
+            ),
             textTheme: const TextTheme(
               displayLarge: TextStyle(fontSize: 80.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
               displayMedium: TextStyle(fontSize: 50.0, fontFamily: 'PublicPixel', color: Colors.black),
@@ -108,7 +119,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                 Animation<double> animation,
                 Animation<double> secondaryAnimation,
               ) {
-                const double numberOfPages = 4;
+                const double numberOfPages = 5;
                 return Stack(
                   children: [
                     Image.asset(
@@ -146,6 +157,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                             return const Experiences(page: 3, numberOfPages: numberOfPages);
                           case Skills.routeName:
                             return const Skills(page: 4, numberOfPages: numberOfPages);
+                          case PortfolioCode.routeName:
+                            return const PortfolioCode(page: 5, numberOfPages: numberOfPages);
                           case SettingsView.routeName:
                             return SettingsView(controller: widget.settingsController);
                           default:
