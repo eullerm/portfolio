@@ -9,7 +9,7 @@ class Lifebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const heartIcon = 'icons/heart.svg';
+    const heartIcon = 'assets/icons/heart.svg';
     double lifebarSize = 250;
     double life = lifebarSize * percentOfLifebar;
     double positionOfLifebar = 0;
