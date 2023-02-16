@@ -20,6 +20,7 @@ class _Error404State extends State<Error404> {
       body: Align(
         alignment: Alignment.center,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SelectableText.rich(
               textAlign: TextAlign.justify,
@@ -47,7 +48,7 @@ class _Error404State extends State<Error404> {
             Container(
               padding: const EdgeInsets.all(16),
               child: PixelatedButton(
-                title: 'Go back',
+                title: 'Back',
                 onClick: () => navigateTo('/landing-page'),
               ),
             ),
