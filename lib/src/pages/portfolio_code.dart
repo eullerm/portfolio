@@ -100,26 +100,22 @@ class _PortfolioCodeState extends State<PortfolioCode> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                flex: 1,
-                child: EnhancedCard(
-                  margin: const EdgeInsets.all(16),
-                  width: 550,
-                  height: 600,
-                  header: Container(
-                    padding: const EdgeInsets.all(20),
-                    child: SelectableText.rich(
-                      textAlign: TextAlign.justify,
-                      TextSpan(
-                        text: 'Código desse portfolio',
-                        style: Theme.of(context).textTheme.displayMedium,
-                      ),
+              EnhancedCard(
+                margin: const EdgeInsets.all(16),
+                width: 550,
+                height: 600,
+                header: Container(
+                  padding: const EdgeInsets.all(20),
+                  child: SelectableText.rich(
+                    textAlign: TextAlign.justify,
+                    TextSpan(
+                      text: 'Código desse portfolio',
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                   ),
                 ),
               ),
-              Flexible(
-                flex: 2,
+              Expanded(
                 child: Scrollbar(
                   thumbVisibility: true,
                   child: ListView.builder(
