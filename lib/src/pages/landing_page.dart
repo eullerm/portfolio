@@ -15,9 +15,6 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  bool startHoover = false;
-  bool menuHoover = false;
-
   void navigateTo(String path, {Object? arguments}) {
     Navigator.pushNamed(context, path, arguments: arguments);
   }
@@ -44,7 +41,7 @@ class _LandingPageState extends State<LandingPage> {
           content: SelectableText.rich(
             textAlign: TextAlign.justify,
             TextSpan(
-              text: 'Euller ',
+              text: 'Euller Macena',
               style: Theme.of(context).textTheme.displayLarge,
             ),
           ),

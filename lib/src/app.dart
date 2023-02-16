@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:portfolio/src/pages/404_error.dart';
 import 'package:portfolio/src/pages/about_me_page.dart';
 import 'package:portfolio/src/pages/experiences.dart';
 import 'package:portfolio/src/pages/landing_page.dart';
@@ -162,7 +163,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                           case SettingsView.routeName:
                             return SettingsView(controller: widget.settingsController);
                           default:
-                            return const LandingPage(page: 1, numberOfPages: numberOfPages);
+                            return const Error404();
                         }
                       },
                     ),
