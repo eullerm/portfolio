@@ -40,7 +40,6 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 100),
       child: Align(

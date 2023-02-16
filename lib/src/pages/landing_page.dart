@@ -44,7 +44,7 @@ class _LandingPageState extends State<LandingPage> {
           content: SelectableText.rich(
             textAlign: TextAlign.justify,
             TextSpan(
-              text: 'Euller Macena',
+              text: 'Euller ',
               style: Theme.of(context).textTheme.displayLarge,
             ),
           ),
