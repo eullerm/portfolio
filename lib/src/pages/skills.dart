@@ -27,6 +27,7 @@ class _SkillsState extends State<Skills> {
     'CSS',
     'SQL',
     'NOSQL',
+    'CI/CD',
   ];
   late ScrollController listController = ScrollController();
 
