@@ -10,7 +10,11 @@ class Error404 extends StatefulWidget {
 
 class _Error404State extends State<Error404> {
   void navigateTo(String path, {Object? arguments}) {
-    Navigator.pushNamed(context, path, arguments: arguments);
+    if (path.isNotEmpty) {
+      Navigator.pushNamed(context, path, arguments: arguments);
+    } else {
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -49,7 +53,7 @@ class _Error404State extends State<Error404> {
               padding: const EdgeInsets.all(16),
               child: PixelatedButton(
                 title: 'Back',
-                onClick: () => navigateTo('/landing-page'),
+                onClick: () => navigateTo(''),
               ),
             ),
             Container(

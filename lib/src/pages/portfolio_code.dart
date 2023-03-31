@@ -22,6 +22,14 @@ class _PortfolioCodeState extends State<PortfolioCode> {
       'name': 'Notisamu',
       'path': Uri(scheme: 'https', host: 'github.com', path: '/eullerm/NotiSAMU'),
     },
+    {
+      'name': 'Notisamu',
+      'path': Uri(scheme: 'https', host: 'github.com', path: '/eullerm/NotiSAMU'),
+    },
+    {
+      'name': 'Notisamu',
+      'path': Uri(scheme: 'https', host: 'github.com', path: '/eullerm/NotiSAMU'),
+    },
   ];
   late ScrollController listController = ScrollController();
   void navigateTo(String path, {Object? arguments}) {
@@ -81,8 +89,9 @@ class _PortfolioCodeState extends State<PortfolioCode> {
   Widget desktop() {
     double width = MediaQuery.of(context).size.width * 0.3;
     double height = MediaQuery.of(context).size.height;
-    double cardSize = (MediaQuery.of(context).size.shortestSide - 50) * 0.7 / 3;
-    double cardArea = MediaQuery.of(context).size.shortestSide * 0.9;
+    double cardArea = MediaQuery.of(context).size.width * 0.6;
+    double cardSize = cardArea * 0.7 / 3;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -238,7 +247,8 @@ class _PortfolioCodeState extends State<PortfolioCode> {
   }
 
   Widget title({required double width, required double height, Alignment? alignment}) {
-    return Center(
+    return Align(
+      alignment: alignment ?? Alignment.center,
       child: EnhancedContainer(
         width: width > 1200 ? 1200 : width,
         height: height,

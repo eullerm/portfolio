@@ -106,7 +106,7 @@ class _LandingPageState extends State<LandingPage> {
 
   Widget mobileBottomNavigationBar() {
     return SizedBox(
-      height: 160,
+      height: 180,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,

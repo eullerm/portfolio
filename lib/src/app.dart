@@ -13,10 +13,7 @@ import 'pages/settings.dart';
 class MyApp extends StatefulWidget {
   final SettingsController settingsController;
 
-  const MyApp({
-    super.key,
-    required this.settingsController,
-  });
+  const MyApp({super.key, required this.settingsController});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -45,6 +42,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       animation: widget.settingsController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           restorationScopeId: 'app',
           localizationsDelegates: const [
             AppLocalizations.delegate,
@@ -67,9 +65,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
               displayLarge: TextStyle(fontSize: 32.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
               displayMedium: TextStyle(fontSize: 24.0, fontFamily: 'PublicPixel', color: Colors.black),
               displaySmall: TextStyle(fontSize: 18.72, fontFamily: 'PublicPixel', color: Colors.black),
-              bodyLarge: TextStyle(fontSize: 16.0, fontFamily: 'PublicPixel', height: 1.5),
-              bodyMedium: TextStyle(fontSize: 13.28, fontFamily: 'PublicPixel', height: 1.5),
-              bodySmall: TextStyle(fontSize: 10.72, fontFamily: 'PublicPixel', height: 1.5),
+              bodyLarge: TextStyle(fontSize: 16.0, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
+              bodyMedium: TextStyle(fontSize: 13.28, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
+              bodySmall: TextStyle(fontSize: 10.72, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
               labelLarge: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.white),
               labelMedium: TextStyle(fontSize: 15.0, fontFamily: 'PublicPixel', color: Colors.white),
               labelSmall: TextStyle(fontSize: 10.0, fontFamily: 'PublicPixel', color: Colors.white),
@@ -86,9 +84,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
               displayLarge: TextStyle(fontSize: 32.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
               displayMedium: TextStyle(fontSize: 24.0, fontFamily: 'PublicPixel', color: Colors.black),
               displaySmall: TextStyle(fontSize: 18.72, fontFamily: 'PublicPixel', color: Colors.black),
-              bodyLarge: TextStyle(fontSize: 16.0, fontFamily: 'PublicPixel', height: 1.5),
-              bodyMedium: TextStyle(fontSize: 13.28, fontFamily: 'PublicPixel', height: 1.5),
-              bodySmall: TextStyle(fontSize: 10.72, fontFamily: 'PublicPixel', height: 1.5),
+              bodyLarge: TextStyle(fontSize: 16.0, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
+              bodyMedium: TextStyle(fontSize: 13.28, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
+              bodySmall: TextStyle(fontSize: 10.72, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
               labelLarge: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.white),
               labelMedium: TextStyle(fontSize: 15.0, fontFamily: 'PublicPixel', color: Colors.white),
               labelSmall: TextStyle(fontSize: 10.0, fontFamily: 'PublicPixel', color: Colors.white),
