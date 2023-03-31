@@ -68,11 +68,25 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
               bodyLarge: TextStyle(fontSize: 16.0, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
               bodyMedium: TextStyle(fontSize: 13.28, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
               bodySmall: TextStyle(fontSize: 10.72, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
-              labelLarge: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.white),
-              labelMedium: TextStyle(fontSize: 15.0, fontFamily: 'PublicPixel', color: Colors.white),
-              labelSmall: TextStyle(fontSize: 10.0, fontFamily: 'PublicPixel', color: Colors.white),
+              labelLarge: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.black),
+              labelMedium: TextStyle(fontSize: 15.0, fontFamily: 'PublicPixel', color: Colors.black),
+              labelSmall: TextStyle(fontSize: 10.0, fontFamily: 'PublicPixel', color: Colors.black),
             ),
             scaffoldBackgroundColor: Colors.transparent,
+            primaryColor: Color(0xFF507335),
+            colorScheme: ColorScheme(
+              secondary: Color(0xFF3C5727),
+              background: Color(0xFFFFFFFF),
+              brightness: Brightness.light,
+              error: Colors.redAccent,
+              onBackground: Colors.redAccent,
+              onError: Colors.redAccent,
+              onPrimary: Colors.redAccent,
+              onSecondary: Colors.redAccent,
+              onSurface: Colors.redAccent,
+              primary: Colors.redAccent,
+              surface: Colors.redAccent,
+            ),
           ),
           darkTheme: ThemeData.dark().copyWith(
             scrollbarTheme: ScrollbarThemeData(
@@ -81,17 +95,31 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
               }),
             ),
             textTheme: const TextTheme(
-              displayLarge: TextStyle(fontSize: 32.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
-              displayMedium: TextStyle(fontSize: 24.0, fontFamily: 'PublicPixel', color: Colors.black),
-              displaySmall: TextStyle(fontSize: 18.72, fontFamily: 'PublicPixel', color: Colors.black),
-              bodyLarge: TextStyle(fontSize: 16.0, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
-              bodyMedium: TextStyle(fontSize: 13.28, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
-              bodySmall: TextStyle(fontSize: 10.72, fontFamily: 'PublicPixel', height: 1.5, color: Colors.black),
+              displayLarge: TextStyle(fontSize: 32.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.white),
+              displayMedium: TextStyle(fontSize: 24.0, fontFamily: 'PublicPixel', color: Colors.white),
+              displaySmall: TextStyle(fontSize: 18.72, fontFamily: 'PublicPixel', color: Colors.white),
+              bodyLarge: TextStyle(fontSize: 16.0, fontFamily: 'PublicPixel', height: 1.5, color: Colors.white),
+              bodyMedium: TextStyle(fontSize: 13.28, fontFamily: 'PublicPixel', height: 1.5, color: Colors.white),
+              bodySmall: TextStyle(fontSize: 10.72, fontFamily: 'PublicPixel', height: 1.5, color: Colors.white),
               labelLarge: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.white),
               labelMedium: TextStyle(fontSize: 15.0, fontFamily: 'PublicPixel', color: Colors.white),
               labelSmall: TextStyle(fontSize: 10.0, fontFamily: 'PublicPixel', color: Colors.white),
             ),
             scaffoldBackgroundColor: Colors.transparent,
+            primaryColor: Color(0xFF3C5727),
+            colorScheme: ColorScheme(
+              secondary: Color(0xFF2C411D),
+              background: Color(0xFF2C2B2C),
+              brightness: Brightness.dark,
+              error: Colors.redAccent,
+              onBackground: Colors.redAccent,
+              onError: Colors.redAccent,
+              onPrimary: Colors.redAccent,
+              onSecondary: Colors.redAccent,
+              onSurface: Colors.redAccent,
+              primary: Colors.redAccent,
+              surface: Colors.redAccent,
+            ),
           ),
           themeMode: widget.settingsController.themeMode,
           initialRoute: '/landing-page',
@@ -151,7 +179,10 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                       builder: (BuildContext _) {
                         switch (routeSettings.name) {
                           case LandingPage.routeName:
-                            return const LandingPage(page: 1, numberOfPages: numberOfPages);
+                            return RefreshIndicator(
+                              onRefresh: () => Future.delayed(Duration(milliseconds: 10)),
+                              child: const LandingPage(page: 1, numberOfPages: numberOfPages),
+                            );
                           case AboutMe.routeName:
                             return const AboutMe(page: 2, numberOfPages: numberOfPages);
                           case Experiences.routeName:

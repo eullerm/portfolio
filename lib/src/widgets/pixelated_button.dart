@@ -60,7 +60,7 @@ class PixelatedButton extends StatelessWidget {
                 ),
                 child: Container(
                   alignment: Alignment.center,
-                  color: Color(0xFF507335),
+                  color: Theme.of(context).colorScheme.secondary,
                   width: width ?? 120,
                   height: height ?? 48,
                   child: Text(

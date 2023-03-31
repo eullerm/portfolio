@@ -13,7 +13,12 @@ class _Error404State extends State<Error404> {
     if (path.isNotEmpty) {
       Navigator.pushNamed(context, path, arguments: arguments);
     } else {
-      Navigator.pop(context);
+      if (Navigator.canPop(context)) {
+        // Check if there is a previous route in the navigation stack
+        Navigator.pop(context);
+      } else {
+        Navigator.pushNamed(context, '/landing-page', arguments: arguments);
+      }
     }
   }
 

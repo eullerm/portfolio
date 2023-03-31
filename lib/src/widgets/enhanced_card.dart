@@ -44,7 +44,7 @@ class EnhancedCard extends StatelessWidget {
               child: Container(
                 width: width + shadow / 2,
                 height: height + shadow / 2,
-                color: const Color(0xFF507335),
+                color: Theme.of(context).colorScheme.background,
               ),
             ),
             Positioned(
@@ -53,7 +53,7 @@ class EnhancedCard extends StatelessWidget {
               child: Container(
                 width: width,
                 height: height,
-                color: const Color(0xFFFFFFFF),
+                color: Theme.of(context).primaryColor,
                 child: Column(
                   mainAxisAlignment: mainAxisAlignment,
                   children: [

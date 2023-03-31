@@ -55,7 +55,7 @@ class _ExperiencesState extends State<Experiences> {
         'Mongodb;',
         'Next.js.',
       ],
-      'startDate': 'Jan de 2022',
+      'startDate': 'Jun de 2022',
       'endDate': null,
       'seeMore': null
     },
