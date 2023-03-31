@@ -4,7 +4,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:portfolio/src/pages/404_error.dart';
 import 'package:portfolio/src/pages/about_me.dart';
 import 'package:portfolio/src/pages/experiences.dart';
-import 'package:portfolio/src/pages/file_viewer.dart';
 import 'package:portfolio/src/pages/landing_page.dart';
 import 'package:portfolio/src/pages/portfolio_code.dart';
 import 'package:portfolio/src/pages/skills.dart';
@@ -152,26 +151,22 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                     ), */
                     Builder(
                       builder: (BuildContext _) {
-                        if (routeSettings.name!.contains(FileViewer.routeName)) {
-                          return const FileViewer();
-                        } else {
-                          switch (routeSettings.name) {
-                            case LandingPage.routeName:
-                              return const LandingPage(page: 1, numberOfPages: numberOfPages);
-                            case AboutMe.routeName:
-                              return const AboutMe(page: 2, numberOfPages: numberOfPages);
-                            case Experiences.routeName:
-                              return const Experiences(page: 3, numberOfPages: numberOfPages);
-                            case Skills.routeName:
-                              return const Skills(page: 4, numberOfPages: numberOfPages);
-                            case PortfolioCode.routeName:
-                              return const PortfolioCode(page: 5, numberOfPages: numberOfPages);
-                            case SettingsView.routeName:
-                              return SettingsView(controller: widget.settingsController);
+                        switch (routeSettings.name) {
+                          case LandingPage.routeName:
+                            return const LandingPage(page: 1, numberOfPages: numberOfPages);
+                          case AboutMe.routeName:
+                            return const AboutMe(page: 2, numberOfPages: numberOfPages);
+                          case Experiences.routeName:
+                            return const Experiences(page: 3, numberOfPages: numberOfPages);
+                          case Skills.routeName:
+                            return const Skills(page: 4, numberOfPages: numberOfPages);
+                          case PortfolioCode.routeName:
+                            return const PortfolioCode(page: 5, numberOfPages: numberOfPages);
+                          case SettingsView.routeName:
+                            return SettingsView(controller: widget.settingsController);
 
-                            default:
-                              return const Error404();
-                          }
+                          default:
+                            return const Error404();
                         }
                       },
                     ),
