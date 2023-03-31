@@ -10,7 +10,7 @@ class Lifebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const heartIcon = 'assets/icons/heart.svg';
-    double lifebarSize = 250;
+    double lifebarSize = (MediaQuery.of(context).size.width - 200) > 250 ? 250 : MediaQuery.of(context).size.width - 200;
     double life = lifebarSize * percentOfLifebar;
     double positionOfLifebar = 0;
 
@@ -19,7 +19,7 @@ class Lifebar extends StatelessWidget {
     return Hero(
       tag: 'lifebar',
       child: SizedBox(
-        width: 300,
+        width: lifebarSize + 25,
         height: 40,
         child: Stack(
           alignment: Alignment.center,

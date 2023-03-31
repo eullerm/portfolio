@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/src/responsive/responsive.dart';
 import 'package:portfolio/src/widgets/box_button.dart';
-import 'package:portfolio/src/widgets/enhanced_card.dart';
 import 'package:portfolio/src/widgets/enhanced_container.dart';
 import 'package:portfolio/src/widgets/header.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PortfolioCode extends StatefulWidget {
   static const routeName = '/portfolio-code';
@@ -16,55 +17,11 @@ class PortfolioCode extends StatefulWidget {
 }
 
 class _PortfolioCodeState extends State<PortfolioCode> {
-  List<Map> pagesCode = [
+  List<Map> projects = [
     {
-      'page': 'Home',
-      'pathToCode': '/code/home',
+      'name': 'Notisamu',
+      'path': Uri(scheme: 'https', host: 'github.com', path: '/eullerm/NotiSAMU'),
     },
-    {
-      'page': 'Sobre mim',
-      'pathToCode': '/code/about-me',
-    },
-    {
-      'page': 'Experiências',
-      'pathToCode': '/code/experiences',
-    },
-    {
-      'page': 'Competências',
-      'pathToCode': '/code/skills',
-    },
-    {
-      'page': 'Código desse portfolio',
-      'pathToCode': '/code/portifolio-code',
-    },
-    {
-      'page': 'Header',
-      'pathToCode': '/code/header',
-    },
-    {
-      'page': 'Enhanced Container',
-      'pathToCode': '/code/enhanced-container',
-    },
-    {
-      'page': 'Enhanced Card',
-      'pathToCode': '/code/enhanced-card',
-    },
-    {
-      'page': 'Lifebar',
-      'pathToCode': '/code/lifebar',
-    },
-    {
-      'page': 'Pixelated Button',
-      'pathToCode': '/code/pixelated-button',
-    },
-    {
-      'page': 'Pixelated Clipper Square',
-      'pathToCode': '/code/pixelated-clipper-square',
-    },
-    {
-      'page': 'Box Button',
-      'pathToCode': '/code/box-button',
-    }
   ];
   late ScrollController listController = ScrollController();
   void navigateTo(String path, {Object? arguments}) {
@@ -72,6 +29,12 @@ class _PortfolioCodeState extends State<PortfolioCode> {
       Navigator.pushNamed(context, path, arguments: arguments);
     } else {
       Navigator.pop(context);
+    }
+  }
+
+  void openAnotherPage(Uri uri) async {
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     }
   }
 
@@ -83,77 +46,216 @@ class _PortfolioCodeState extends State<PortfolioCode> {
 
   @override
   Widget build(BuildContext context) {
+    Responsive responsive = Responsive(context: context);
     return Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(100),
-          child: Header(
-            page: widget.page,
-            numberOfPages: widget.numberOfPages,
-            leftButtonPath: '',
-            rightButtonPath: '/experiences',
+      backgroundColor: Colors.transparent,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100),
+        child: Header(
+          page: widget.page,
+          numberOfPages: widget.numberOfPages,
+          leftButtonPath: '',
+          rightButtonPath: '/experiences',
+        ),
+      ),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: ['4K', 'DESKTOP'].contains(responsive.screen) ? 50 : 8),
+        child: Builder(builder: (BuildContext _) {
+          switch (responsive.screen) {
+            case '4K':
+              return desktop();
+            case 'DESKTOP':
+              return desktop();
+            case 'MOBILE':
+              return mobile();
+            case 'TABLET':
+              return tablet();
+            default:
+              return desktop();
+          }
+        }),
+      ),
+    );
+  }
+
+  Widget desktop() {
+    double width = MediaQuery.of(context).size.width * 0.3;
+    double height = MediaQuery.of(context).size.height;
+    double cardSize = (MediaQuery.of(context).size.shortestSide - 50) * 0.7 / 3;
+    double cardArea = MediaQuery.of(context).size.shortestSide * 0.9;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        title(width: width > 550 ? 550 : width, height: height * 0.8, alignment: Alignment.topLeft),
+        Container(
+          height: height,
+          width: cardArea,
+          child: Scrollbar(
+            thumbVisibility: true,
+            child: ListView.builder(
+              controller: listController,
+              itemCount: (projects.length / 3).ceil(),
+              itemBuilder: (BuildContext context, int index) {
+                int startIndex = index * 3;
+                int endIndex = startIndex + 3;
+                List<Map> currentData = projects.sublist(startIndex, endIndex > projects.length ? projects.length : endIndex);
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: currentData
+                      .map(
+                        (data) => BoxButton(
+                          onClick: () => openAnotherPage(data['path']),
+                          child: EnhancedContainer(
+                            width: cardSize,
+                            height: cardSize,
+                            margin: const EdgeInsets.all(16.0),
+                            child: Center(
+                              child: SelectableText.rich(
+                                textAlign: TextAlign.center,
+                                TextSpan(
+                                  text: data['name'],
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                );
+              },
+            ),
           ),
         ),
-        body: Container(
-          padding: const EdgeInsets.all(50),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              EnhancedCard(
-                margin: const EdgeInsets.all(16),
-                width: 550,
-                height: 600,
-                header: Container(
-                  padding: const EdgeInsets.all(20),
-                  child: SelectableText.rich(
-                    textAlign: TextAlign.justify,
-                    TextSpan(
-                      text: 'Código desse portfolio',
-                      style: Theme.of(context).textTheme.displayMedium,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Scrollbar(
-                  thumbVisibility: true,
-                  child: ListView.builder(
-                    controller: listController,
-                    itemCount: (pagesCode.length / 3).ceil(),
-                    itemBuilder: (BuildContext context, int index) {
-                      int startIndex = index * 3;
-                      int endIndex = startIndex + 3;
-                      List<Map> currentData = pagesCode.sublist(startIndex, endIndex > pagesCode.length ? pagesCode.length : endIndex);
-                      return Row(
-                        children: currentData
-                            .map(
-                              (page) => BoxButton(
-                                onClick: () => navigateTo(page['pathToCode']),
-                                child: EnhancedContainer(
-                                  width: 300,
-                                  height: 300,
-                                  margin: const EdgeInsets.all(16.0),
-                                  child: Center(
-                                    child: SelectableText.rich(
-                                      textAlign: TextAlign.center,
-                                      TextSpan(
-                                        text: page['page'],
-                                        style: Theme.of(context).textTheme.bodyLarge,
-                                      ),
+      ],
+    );
+  }
+
+  Widget tablet() {
+    double width = MediaQuery.of(context).size.width * 0.9;
+    double height = MediaQuery.of(context).size.height * 0.1;
+    double cardSize = (MediaQuery.of(context).size.shortestSide - 16) * 0.7 / 3;
+
+    return Wrap(
+      runSpacing: 20,
+      children: [
+        title(width: width, height: height),
+        Center(
+          child: Container(
+            width: width,
+            height: MediaQuery.of(context).size.height - height - kToolbarHeight - 80,
+            child: Scrollbar(
+              thumbVisibility: true,
+              child: ListView.builder(
+                controller: listController,
+                itemCount: (projects.length / 3).ceil(),
+                itemBuilder: (BuildContext context, int index) {
+                  int startIndex = index * 3;
+                  int endIndex = startIndex + 3;
+                  List<Map> currentData = projects.sublist(startIndex, endIndex > projects.length ? projects.length : endIndex);
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: currentData
+                        .map(
+                          (data) => BoxButton(
+                            onClick: () => openAnotherPage(data['path']),
+                            child: Center(
+                              child: EnhancedContainer(
+                                width: cardSize,
+                                height: cardSize,
+                                margin: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: SelectableText.rich(
+                                    textAlign: TextAlign.center,
+                                    TextSpan(
+                                      text: data['name'],
+                                      style: Theme.of(context).textTheme.bodyLarge,
                                     ),
                                   ),
                                 ),
                               ),
-                            )
-                            .toList(),
-                      );
-                    },
-                  ),
-                ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  );
+                },
               ),
-            ],
+            ),
           ),
-        ));
+        ),
+      ],
+    );
+  }
+
+  Widget mobile() {
+    double width = MediaQuery.of(context).size.width * 0.9;
+    double height = MediaQuery.of(context).size.height * 0.1;
+    double cardSize = (MediaQuery.of(context).size.shortestSide - 16) * 0.6;
+    double cardArea = MediaQuery.of(context).size.longestSide * 0.9 - height - kToolbarHeight;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        title(width: width, height: height),
+        Container(
+          height: cardArea,
+          width: width,
+          child: Scrollbar(
+            thumbVisibility: true,
+            controller: listController,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: projects
+                    .map(
+                      (data) => BoxButton(
+                        onClick: () => openAnotherPage(data['path']),
+                        child: EnhancedContainer(
+                          width: cardSize,
+                          height: cardSize,
+                          margin: const EdgeInsets.all(16.0),
+                          child: Center(
+                            child: SelectableText.rich(
+                              textAlign: TextAlign.center,
+                              TextSpan(
+                                text: data['name'],
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget title({required double width, required double height, Alignment? alignment}) {
+    return Center(
+      child: EnhancedContainer(
+        width: width > 1200 ? 1200 : width,
+        height: height,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Align(
+            alignment: alignment ?? Alignment.center,
+            child: SelectableText.rich(
+              textAlign: TextAlign.justify,
+              TextSpan(
+                text: 'Códigos',
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

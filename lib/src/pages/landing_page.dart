@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/src/responsive/responsive.dart';
 import 'package:portfolio/src/widgets/enhanced_card.dart';
 import 'package:portfolio/src/widgets/header.dart';
 import 'package:portfolio/src/widgets/pixelated_button.dart';
@@ -21,6 +22,8 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
+    Responsive responsive = Responsive(context: context);
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
@@ -34,49 +37,150 @@ class _LandingPageState extends State<LandingPage> {
       ),
       body: Align(
         alignment: Alignment.center,
-        child: EnhancedCard(
-          width: 1200,
-          height: 400,
-          mainAxisAlignment: MainAxisAlignment.center,
-          content: SelectableText.rich(
-            textAlign: TextAlign.justify,
-            TextSpan(
-              text: 'Euller Macena',
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-          ),
-          footer: SelectableText.rich(
-            textAlign: TextAlign.justify,
-            TextSpan(
-              text: 'Desenvolvedor Full Stack',
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-          ),
+        child: Builder(builder: (BuildContext _) {
+          switch (responsive.screen) {
+            case '4K':
+              return desktop();
+            case 'DESKTOP':
+              return desktop();
+            case 'MOBILE':
+              return mobile();
+            case 'TABLET':
+              return tablet();
+            default:
+              return desktop();
+          }
+        }),
+      ),
+      bottomNavigationBar: Builder(builder: (BuildContext _) {
+        switch (responsive.screen) {
+          case '4K':
+            return desktopBottomNavigationBar();
+          case 'DESKTOP':
+            return desktopBottomNavigationBar();
+          case 'MOBILE':
+            return mobileBottomNavigationBar();
+          case 'TABLET':
+            return tabletBottomNavigationBar();
+          default:
+            return desktopBottomNavigationBar();
+        }
+      }),
+    );
+  }
+
+  Widget mobile() {
+    double width = MediaQuery.of(context).size.width * 0.9;
+    double height = MediaQuery.of(context).size.height * 0.4;
+    return EnhancedCard(
+      width: width > 1200 ? 1200 : width,
+      height: height > 400 ? 400 : height,
+      mainAxisAlignment: MainAxisAlignment.center,
+      content: content(
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Widget tablet() {
+    double width = MediaQuery.of(context).size.width * 0.8;
+    double height = MediaQuery.of(context).size.height * 0.4;
+    return EnhancedCard(
+      width: width > 1200 ? 1200 : width,
+      height: height > 400 ? 400 : height,
+      mainAxisAlignment: MainAxisAlignment.center,
+      content: content(),
+    );
+  }
+
+  Widget desktop() {
+    double width = MediaQuery.of(context).size.width * 0.8;
+    double height = MediaQuery.of(context).size.height * 0.4;
+    return EnhancedCard(
+      width: width > 1200 ? 1200 : width,
+      height: height > 400 ? 400 : height,
+      mainAxisAlignment: MainAxisAlignment.center,
+      content: content(),
+    );
+  }
+
+  Widget mobileBottomNavigationBar() {
+    return SizedBox(
+      height: 160,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: buttons(),
+      ),
+    );
+  }
+
+  Widget tabletBottomNavigationBar() {
+    return SizedBox(
+      height: 100,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: buttons(),
+      ),
+    );
+  }
+
+  Widget desktopBottomNavigationBar() {
+    return SizedBox(
+      height: 160,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: buttons(),
+      ),
+    );
+  }
+
+  List<Widget> buttons({double? width, double? height}) {
+    return [
+      Container(
+        padding: const EdgeInsets.all(16),
+        child: PixelatedButton(
+          width: width,
+          height: height,
+          title: 'Start',
+          onClick: () => navigateTo('/about-me'),
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 200,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: PixelatedButton(
-                title: 'Start',
-                onClick: () => navigateTo('/about-me'),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: PixelatedButton(
-                title: 'Menu',
-                onClick: () => print('menu'),
-              ),
-            ),
-          ],
+      Container(
+        padding: const EdgeInsets.all(16),
+        child: PixelatedButton(
+          width: width,
+          height: height,
+          title: 'Menu',
+          onClick: () => print('menu'),
         ),
       ),
+    ];
+  }
+
+  Widget content({TextAlign textAlign = TextAlign.justify}) {
+    return Column(
+      children: [
+        SelectableText.rich(
+          textAlign: textAlign,
+          TextSpan(
+            text: 'Euller Macena',
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        SelectableText.rich(
+          textAlign: textAlign,
+          TextSpan(
+            text: 'Desenvolvedor Full Stack',
+            style: Theme.of(context).textTheme.displaySmall,
+          ),
+        ),
+      ],
     );
   }
 }

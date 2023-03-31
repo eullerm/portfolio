@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class EnhancedContainer extends StatelessWidget {
   final double width;
   final double height;
+  final double? maxWidth;
+  final double? maxHeight;
   final Widget? child;
   final double shadow;
   final EdgeInsetsGeometry? margin;
@@ -11,6 +13,8 @@ class EnhancedContainer extends StatelessWidget {
     super.key,
     required this.width,
     required this.height,
+    this.maxWidth,
+    this.maxHeight,
     this.child,
     this.shadow = 16,
     this.margin,
@@ -21,7 +25,11 @@ class EnhancedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: margin ?? EdgeInsets.all(0),
-      child: SizedBox(
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: maxWidth ?? width + shadow,
+          maxHeight: maxHeight ?? height + shadow,
+        ),
         width: width + shadow,
         height: height + shadow,
         child: Stack(

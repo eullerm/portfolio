@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class EnhancedCard extends StatelessWidget {
   final double width;
   final double height;
+  final double? maxWidth;
+  final double? maxHeight;
   final Widget? header;
   final Widget? content;
   final Widget? footer;
@@ -13,6 +15,8 @@ class EnhancedCard extends StatelessWidget {
     super.key,
     required this.width,
     required this.height,
+    this.maxWidth,
+    this.maxHeight,
     this.header,
     this.content,
     this.footer,
@@ -25,7 +29,11 @@ class EnhancedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: margin ?? EdgeInsets.all(0),
-      child: SizedBox(
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: maxWidth ?? width + shadow,
+          maxHeight: maxHeight ?? height + shadow,
+        ),
         width: width + shadow,
         height: height + shadow,
         child: Stack(
@@ -49,23 +57,39 @@ class EnhancedCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: mainAxisAlignment,
                   children: [
-                    Padding(
-                      padding: header != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0),
-                      child: header,
+                    Visibility(
+                      visible: header != null,
+                      child: Padding(
+                        padding: header != null ? const EdgeInsets.all(8) : const EdgeInsets.all(0),
+                        child: header,
+                      ),
                     ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: header != null ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: content != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0),
-                            child: content,
+                    Visibility(
+                      visible: content != null,
+                      child: Flexible(
+                        flex: 2,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: content != null ? const EdgeInsets.all(8) : const EdgeInsets.all(0),
+                            child: Scrollbar(
+                              thumbVisibility: true,
+                              child: SingleChildScrollView(child: content ?? Container()),
+                            ),
                           ),
-                          Padding(
-                            padding: footer != null ? const EdgeInsets.all(16) : const EdgeInsets.all(0),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: footer != null,
+                      child: Flexible(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: footer != null ? const EdgeInsets.all(8) : const EdgeInsets.all(0),
                             child: footer,
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ],

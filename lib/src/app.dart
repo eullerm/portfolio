@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:portfolio/src/pages/404_error.dart';
-import 'package:portfolio/src/pages/about_me_page.dart';
+import 'package:portfolio/src/pages/about_me.dart';
 import 'package:portfolio/src/pages/experiences.dart';
+import 'package:portfolio/src/pages/file_viewer.dart';
 import 'package:portfolio/src/pages/landing_page.dart';
 import 'package:portfolio/src/pages/portfolio_code.dart';
 import 'package:portfolio/src/pages/skills.dart';
@@ -64,11 +65,12 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
               }),
             ),
             textTheme: const TextTheme(
-              displayLarge: TextStyle(fontSize: 80.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
-              displayMedium: TextStyle(fontSize: 30.0, fontFamily: 'PublicPixel', color: Colors.black),
-              displaySmall: TextStyle(fontSize: 30.0, fontFamily: 'PublicPixel', color: Colors.black),
-              bodyLarge: TextStyle(fontSize: 18.0, fontFamily: 'PublicPixel', height: 1.5),
-              bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'PublicPixel', height: 1.5),
+              displayLarge: TextStyle(fontSize: 32.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
+              displayMedium: TextStyle(fontSize: 24.0, fontFamily: 'PublicPixel', color: Colors.black),
+              displaySmall: TextStyle(fontSize: 18.72, fontFamily: 'PublicPixel', color: Colors.black),
+              bodyLarge: TextStyle(fontSize: 16.0, fontFamily: 'PublicPixel', height: 1.5),
+              bodyMedium: TextStyle(fontSize: 13.28, fontFamily: 'PublicPixel', height: 1.5),
+              bodySmall: TextStyle(fontSize: 10.72, fontFamily: 'PublicPixel', height: 1.5),
               labelLarge: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.white),
               labelMedium: TextStyle(fontSize: 15.0, fontFamily: 'PublicPixel', color: Colors.white),
               labelSmall: TextStyle(fontSize: 10.0, fontFamily: 'PublicPixel', color: Colors.white),
@@ -82,11 +84,12 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
               }),
             ),
             textTheme: const TextTheme(
-              displayLarge: TextStyle(fontSize: 80.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
-              displayMedium: TextStyle(fontSize: 50.0, fontFamily: 'PublicPixel', color: Colors.black),
-              displaySmall: TextStyle(fontSize: 30.0, fontFamily: 'PublicPixel', color: Colors.black),
-              bodyLarge: TextStyle(fontSize: 18.0, fontFamily: 'PublicPixel', height: 1.5),
-              bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'PublicPixel', height: 1.5),
+              displayLarge: TextStyle(fontSize: 32.0, fontFamily: 'PublicPixel', fontWeight: FontWeight.bold, color: Colors.black),
+              displayMedium: TextStyle(fontSize: 24.0, fontFamily: 'PublicPixel', color: Colors.black),
+              displaySmall: TextStyle(fontSize: 18.72, fontFamily: 'PublicPixel', color: Colors.black),
+              bodyLarge: TextStyle(fontSize: 16.0, fontFamily: 'PublicPixel', height: 1.5),
+              bodyMedium: TextStyle(fontSize: 13.28, fontFamily: 'PublicPixel', height: 1.5),
+              bodySmall: TextStyle(fontSize: 10.72, fontFamily: 'PublicPixel', height: 1.5),
               labelLarge: TextStyle(fontSize: 25.0, fontFamily: 'PublicPixel', color: Colors.white),
               labelMedium: TextStyle(fontSize: 15.0, fontFamily: 'PublicPixel', color: Colors.white),
               labelSmall: TextStyle(fontSize: 10.0, fontFamily: 'PublicPixel', color: Colors.white),
@@ -149,21 +152,26 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                     ), */
                     Builder(
                       builder: (BuildContext _) {
-                        switch (routeSettings.name) {
-                          case LandingPage.routeName:
-                            return const LandingPage(page: 1, numberOfPages: numberOfPages);
-                          case AboutMe.routeName:
-                            return const AboutMe(page: 2, numberOfPages: numberOfPages);
-                          case Experiences.routeName:
-                            return const Experiences(page: 3, numberOfPages: numberOfPages);
-                          case Skills.routeName:
-                            return const Skills(page: 4, numberOfPages: numberOfPages);
-                          case PortfolioCode.routeName:
-                            return const PortfolioCode(page: 5, numberOfPages: numberOfPages);
-                          case SettingsView.routeName:
-                            return SettingsView(controller: widget.settingsController);
-                          default:
-                            return const Error404();
+                        if (routeSettings.name!.contains(FileViewer.routeName)) {
+                          return const FileViewer();
+                        } else {
+                          switch (routeSettings.name) {
+                            case LandingPage.routeName:
+                              return const LandingPage(page: 1, numberOfPages: numberOfPages);
+                            case AboutMe.routeName:
+                              return const AboutMe(page: 2, numberOfPages: numberOfPages);
+                            case Experiences.routeName:
+                              return const Experiences(page: 3, numberOfPages: numberOfPages);
+                            case Skills.routeName:
+                              return const Skills(page: 4, numberOfPages: numberOfPages);
+                            case PortfolioCode.routeName:
+                              return const PortfolioCode(page: 5, numberOfPages: numberOfPages);
+                            case SettingsView.routeName:
+                              return SettingsView(controller: widget.settingsController);
+
+                            default:
+                              return const Error404();
+                          }
                         }
                       },
                     ),

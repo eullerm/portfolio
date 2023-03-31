@@ -1,97 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/src/widgets/box_button.dart';
 import 'package:portfolio/src/widgets/pixelated_clipper_square.dart';
 
-class PixelatedButton extends StatefulWidget {
+class PixelatedButton extends StatelessWidget {
   final String title;
   final Function()? onClick;
-  final double width;
-  final double height;
-  final double shadow;
+  final double? width;
+  final double? height;
+  final double? shadow;
   final TextStyle? style;
   const PixelatedButton({
     super.key,
     this.title = '',
     this.onClick,
-    this.width = 200,
-    this.height = 80,
-    this.shadow = 1,
+    this.width,
+    this.height,
+    this.shadow,
     this.style,
   });
 
   @override
-  State<PixelatedButton> createState() => _PixelatedButtonState();
-}
-
-class _PixelatedButtonState extends State<PixelatedButton> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 275),
-      vsync: this,
-    );
-    _animation = Tween(begin: 1.0, end: 1.1).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.ease,
-        reverseCurve: Curves.easeIn,
-      ),
-    );
-    _controller.addListener(() {
-      setState(() {});
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (value) {
-        setState(() {
-          _controller.forward();
-        });
-      },
-      onExit: (value) {
-        setState(() {
-          _controller.reverse();
-        });
-      },
-      child: ScaleTransition(
-        scale: _animation,
+    return BoxButton(
+      onClick: onClick,
+      child: Container(
+        width: width ?? 120 + (shadow ?? (width ?? 120) * 0.04),
+        height: height ?? 48 + (shadow ?? (height ?? 48) * 0.10),
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            ClipPath(
-              clipper: PixelatedClipperSquare(
-                bottomRight: true,
-                topLeft: true,
-                bottomLeft: true,
-                topRight: true,
-              ),
-              child: Container(
-                color: Colors.black,
-                width: widget.width + widget.shadow,
-                height: widget.height + widget.shadow,
+            Positioned(
+              top: 0,
+              left: 0,
+              child: ClipPath(
+                clipper: PixelatedClipperSquare(
+                  bottomRight: true,
+                  topLeft: true,
+                  bottomLeft: true,
+                  topRight: true,
+                ),
+                child: Container(
+                  color: Colors.black,
+                  width: width ?? 120 + (shadow ?? (width ?? 120) * 0.04),
+                  height: height ?? 48 + (shadow ?? (height ?? 48) * 0.10),
+                ),
               ),
             ),
-            ClipPath(
-              clipper: PixelatedClipperSquare(
-                bottomRight: true,
-                topLeft: true,
-                bottomLeft: true,
-                topRight: true,
-              ),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(widget.width, widget.height),
-                  backgroundColor: Color(0xFF507335),
+            Positioned(
+              top: (shadow ?? (height ?? 48) * 0.10) / 2,
+              left: (shadow ?? (width ?? 120) * 0.04) / 2,
+              bottom: (shadow ?? (height ?? 48) * 0.10) / 2,
+              right: (shadow ?? (width ?? 120) * 0.04) / 2,
+              child: ClipPath(
+                clipper: PixelatedClipperSquare(
+                  bottomRight: true,
+                  topLeft: true,
+                  bottomLeft: true,
+                  topRight: true,
                 ),
-                onPressed: widget.onClick,
-                child: Text(
-                  widget.title,
-                  style: widget.style ?? Theme.of(context).textTheme.labelLarge,
+                child: Container(
+                  alignment: Alignment.center,
+                  color: Color(0xFF507335),
+                  width: width ?? 120,
+                  height: height ?? 48,
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: style ?? Theme.of(context).textTheme.bodyMedium,
+                  ),
                 ),
               ),
             ),
