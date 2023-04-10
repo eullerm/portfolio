@@ -66,7 +66,7 @@ class PixelatedButton extends StatelessWidget {
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: style ?? Theme.of(context).textTheme.bodyMedium,
+                    style: style ?? Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
               ),

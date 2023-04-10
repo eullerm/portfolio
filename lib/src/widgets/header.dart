@@ -71,11 +71,14 @@ class _HeaderState extends State<Header> {
                   width: width,
                   height: height,
                   shadow: shadow,
-                  child: Image.asset(
-                    'assets/icons/LeftButton.png',
-                    fit: BoxFit.scaleDown,
-                    width: widthIcon,
-                    height: heightIcon,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      'assets/icons/LeftButton.png',
+                      fit: BoxFit.scaleDown,
+                      width: widthIcon,
+                      height: heightIcon,
+                    ),
                   ),
                 ),
               ),
@@ -94,11 +97,14 @@ class _HeaderState extends State<Header> {
                   width: width,
                   height: height,
                   shadow: shadow,
-                  child: Image.asset(
-                    'assets/icons/RightButton.png',
-                    fit: BoxFit.scaleDown,
-                    width: widthIcon,
-                    height: heightIcon,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      'assets/icons/RightButton.png',
+                      fit: BoxFit.scaleDown,
+                      width: widthIcon,
+                      height: heightIcon,
+                    ),
                   ),
                 ),
               ),

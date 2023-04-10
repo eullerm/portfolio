@@ -42,20 +42,20 @@ class _BoxButtonState extends State<BoxButton> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (value) {
-        setState(() {
-          _controller.forward();
-        });
-      },
-      onExit: (value) {
-        setState(() {
-          _controller.reverse();
-        });
-      },
-      child: GestureDetector(
-        onTap: widget.onClick,
+    return GestureDetector(
+      onTap: widget.onClick,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (value) {
+          setState(() {
+            _controller.forward();
+          });
+        },
+        onExit: (value) {
+          setState(() {
+            _controller.reverse();
+          });
+        },
         child: ScaleTransition(
           scale: _animation,
           child: widget.child,

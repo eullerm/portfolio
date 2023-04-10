@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/src/responsive/responsive.dart';
+import 'package:portfolio/src/widgets/custom_dropdown.dart';
 import 'package:portfolio/src/widgets/enhanced_card.dart';
 import 'package:portfolio/src/widgets/header.dart';
 import 'package:portfolio/src/widgets/pixelated_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LandingPage extends StatefulWidget {
   static const routeName = '/landing-page';
@@ -16,8 +18,28 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  final language = ValueNotifier('Português');
+  final dropLanguageValues = ['English', 'Português'];
+  Map cv = {
+    'English': Uri(
+      scheme: 'https',
+      host: 'drive.google.com',
+      path: '/file/d/1W0ODUlfJDdTEcYXN3D0Gplyh6PiVzLuV/view',
+    ),
+    'Português': Uri(
+      scheme: 'https',
+      host: 'drive.google.com',
+      path: 'file/d/1cD850ORC9c-16mOYbCz549h5cQUrieby/view',
+    )
+  };
   void navigateTo(String path, {Object? arguments}) {
     Navigator.pushNamed(context, path, arguments: arguments);
+  }
+
+  void openAnotherPage(Uri uri) async {
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
   }
 
   @override
@@ -35,22 +57,53 @@ class _LandingPageState extends State<LandingPage> {
           needRightButton: false,
         ),
       ),
-      body: Align(
-        alignment: Alignment.center,
-        child: Builder(builder: (BuildContext _) {
-          switch (responsive.screen) {
-            case '4K':
-              return desktop();
-            case 'DESKTOP':
-              return desktop();
-            case 'MOBILE':
-              return mobile();
-            case 'TABLET':
-              return tablet();
-            default:
-              return desktop();
-          }
-        }),
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Builder(builder: (BuildContext _) {
+              switch (responsive.screen) {
+                case '4K':
+                  return desktop();
+                case 'DESKTOP':
+                  return desktop();
+                case 'MOBILE':
+                  return mobile();
+                case 'TABLET':
+                  return tablet();
+                default:
+                  return desktop();
+              }
+            }),
+          ),
+          Positioned(
+            top: 16,
+            right: 16,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PixelatedButton(
+                  title: 'Curriculum',
+                  onClick: () => openAnotherPage(cv[language.value]),
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                ValueListenableBuilder(
+                  valueListenable: language,
+                  builder: (BuildContext context, String value, _) {
+                    return CustomDropDown(
+                      onClick: (value) => language.value = value,
+                      value: language.value,
+                      items: dropLanguageValues,
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: Builder(builder: (BuildContext _) {
         switch (responsive.screen) {
