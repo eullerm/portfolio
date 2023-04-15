@@ -53,6 +53,9 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     author = Provider.of<Author>(context, listen: false);
+    if (author != null) {
+      language.value = {author!.language: dropLanguageValues[author!.language]!};
+    }
     language.addListener(() => getAuthor());
     getAuthor();
   }

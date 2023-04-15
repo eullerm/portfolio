@@ -27,7 +27,6 @@ class _AboutMeState extends State<AboutMe> {
   void initState() {
     super.initState();
     description = (Provider.of<Author>(context, listen: false).description).split(r'\n');
-    print(description);
   }
 
   void navigateTo(String path, {Object? arguments}) {
