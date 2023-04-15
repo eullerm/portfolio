@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/src/model/author.dart';
 import 'package:portfolio/src/responsive/responsive.dart';
 import 'package:portfolio/src/widgets/enhanced_card.dart';
 import 'package:portfolio/src/widgets/enhanced_container.dart';
 import 'package:portfolio/src/widgets/header.dart';
 import 'package:portfolio/src/widgets/pixelated_button.dart';
+import 'package:provider/provider.dart';
 
 class AboutMe extends StatefulWidget {
   static const routeName = '/about-me';
@@ -19,6 +21,14 @@ class AboutMe extends StatefulWidget {
 class _AboutMeState extends State<AboutMe> {
   bool startHoover = false;
   bool menuHoover = false;
+  List<String> description = [];
+
+  @override
+  void initState() {
+    super.initState();
+    description = (Provider.of<Author>(context, listen: false).description).split(r'\n');
+    print(description);
+  }
 
   void navigateTo(String path, {Object? arguments}) {
     if (path.isNotEmpty) {
@@ -140,17 +150,14 @@ class _AboutMeState extends State<AboutMe> {
             SelectableText.rich(
               textAlign: TextAlign.justify,
               TextSpan(
-                children: [
-                  TextSpan(
-                    text:
-                        "Sou um desenvolvedor full stack com graduação em ciência da computação pela UFF. Apaixonado por criar aplicações que facilitem a vida do usuário.\n",
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  TextSpan(
-                    text: 'Minhas especializações incluem web e mobile.',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  )
-                ],
+                children: description
+                    .map(
+                      (text) => TextSpan(
+                        text: text + '\n',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    )
+                    .toList(),
               ),
             ),
           ],

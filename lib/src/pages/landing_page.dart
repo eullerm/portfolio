@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/src/api/sheets/author_sheets_api.dart';
+import 'package:portfolio/src/model/author.dart';
 import 'package:portfolio/src/responsive/responsive.dart';
+import 'package:portfolio/src/storage/shared_preferences.dart';
 import 'package:portfolio/src/widgets/custom_dropdown.dart';
 import 'package:portfolio/src/widgets/enhanced_card.dart';
 import 'package:portfolio/src/widgets/header.dart';
 import 'package:portfolio/src/widgets/pixelated_button.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LandingPage extends StatefulWidget {
@@ -18,20 +22,23 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  final language = ValueNotifier('Português');
-  final dropLanguageValues = ['English', 'Português'];
+  final language = ValueNotifier({'portuguese': 'Português'});
+  final dropLanguageValues = {'english': 'English', 'portuguese': 'Português'};
   Map cv = {
-    'English': Uri(
+    'english': Uri(
       scheme: 'https',
       host: 'drive.google.com',
       path: '/file/d/1W0ODUlfJDdTEcYXN3D0Gplyh6PiVzLuV/view',
     ),
-    'Português': Uri(
+    'portuguese': Uri(
       scheme: 'https',
       host: 'drive.google.com',
-      path: 'file/d/1cD850ORC9c-16mOYbCz549h5cQUrieby/view',
+      path: '/file/d/1cD850ORC9c-16mOYbCz549h5cQUrieby/view',
     )
   };
+
+  Author? author;
+
   void navigateTo(String path, {Object? arguments}) {
     Navigator.pushNamed(context, path, arguments: arguments);
   }
@@ -43,9 +50,23 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    author = Provider.of<Author>(context, listen: false);
+    language.addListener(() => getAuthor());
+    getAuthor();
+  }
+
+  Future getAuthor() async {
+    author?.update(await AuthorSheetsApi.getByLanguage(language.value.keys.first));
+    saveObjectToPrefs('author', author?.toJson() ?? '');
+  }
+
+  @override
   Widget build(BuildContext context) {
     Responsive responsive = Responsive(context: context);
-
+    context.watch<Author?>();
+    author = context.read<Author?>();
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
@@ -84,7 +105,7 @@ class _LandingPageState extends State<LandingPage> {
               children: [
                 PixelatedButton(
                   title: 'Curriculum',
-                  onClick: () => openAnotherPage(cv[language.value]),
+                  onClick: () => openAnotherPage(cv[language.value.keys.first]),
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
                 SizedBox(
@@ -92,11 +113,20 @@ class _LandingPageState extends State<LandingPage> {
                 ),
                 ValueListenableBuilder(
                   valueListenable: language,
-                  builder: (BuildContext context, String value, _) {
+                  builder: (BuildContext context, Map<String, String> value, _) {
                     return CustomDropDown(
-                      onClick: (value) => language.value = value,
-                      value: language.value,
-                      items: dropLanguageValues,
+                      onClick: (value) {
+                        for (var entry in dropLanguageValues.entries) {
+                          var k = entry.key;
+                          var v = entry.value;
+                          if (v == value) {
+                            language.value = {k: v};
+                            break;
+                          }
+                        }
+                      },
+                      value: language.value.values.first,
+                      items: dropLanguageValues.values.toList(),
                     );
                   },
                 ),
@@ -219,7 +249,7 @@ class _LandingPageState extends State<LandingPage> {
         SelectableText.rich(
           textAlign: textAlign,
           TextSpan(
-            text: 'Euller Macena',
+            text: author?.name,
             style: Theme.of(context).textTheme.displayLarge,
           ),
         ),
@@ -229,7 +259,7 @@ class _LandingPageState extends State<LandingPage> {
         SelectableText.rich(
           textAlign: textAlign,
           TextSpan(
-            text: 'Desenvolvedor Full Stack',
+            text: author?.role,
             style: Theme.of(context).textTheme.displaySmall,
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:portfolio/src/model/author.dart';
 import 'package:portfolio/src/pages/404_error.dart';
 import 'package:portfolio/src/pages/about_me.dart';
 import 'package:portfolio/src/pages/experiences.dart';
