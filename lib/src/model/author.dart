@@ -39,8 +39,6 @@ class Author extends ChangeNotifier {
   }
 
   factory Author.fromMap(Map<String, dynamic> map) {
-    print(map);
-    print(map['name']);
     return Author(
       name: (map['name'] as String),
       role: map['role'] as String,
