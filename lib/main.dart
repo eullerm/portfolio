@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:portfolio/src/api/sheets/author_sheets_api.dart';
+import 'package:portfolio/src/api/sheets/sheets_api.dart';
 import 'package:portfolio/src/model/author.dart';
-import 'package:portfolio/src/storage/shared_preferences.dart';
+import 'package:portfolio/src/model/experience.dart';
+import 'package:portfolio/src/storage/local_storage.dart';
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
@@ -17,15 +20,36 @@ void main() async {
   await settingsController.loadSettings();
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
-  await AuthorSheetsApi.init();
+  await SheetsApi.init();
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  final author = await getObjectFromPrefs('author');
+  String authorJson = await getObject('author');
+  String experiencesJson = await getObject('experiences');
+  String languageJson = await getObject('language');
+  String lastFetch = await getObject('lastFetch');
+
+  if (lastFetch.isEmpty || DateTime.now().difference(DateTime.parse(lastFetch)).inDays > 7) {
+    saveObject('lastFetch', DateTime.now().toString());
+  }
+
+  if (languageJson.isEmpty || lastFetch.isEmpty || DateTime.now().difference(DateTime.parse(lastFetch)).inDays > 7) {
+    saveObject('language', jsonEncode({'portuguese': 'Português'}));
+  }
+  if (authorJson.isEmpty || lastFetch.isEmpty || DateTime.now().difference(DateTime.parse(lastFetch)).inDays > 7) {
+    authorJson = (await SheetsApi.getAuthor(language: 'portuguese'))?.toJson() ?? '';
+    saveObject('author', authorJson);
+  }
+  if (experiencesJson.isEmpty || lastFetch.isEmpty || DateTime.now().difference(DateTime.parse(lastFetch)).inDays > 7) {
+    experiencesJson = (await SheetsApi.getExperiences(language: 'portuguese'))?.toJson() ?? '';
+    saveObject('experiences', experiencesJson);
+  }
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => Author.fromJson(author)),
+        ChangeNotifierProvider(create: (_) => Author.fromJson(authorJson)),
+        ChangeNotifierProvider(create: (_) => Experiences.fromJson(experiencesJson)),
       ],
       child: MyApp(settingsController: settingsController),
     ),

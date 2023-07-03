@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:portfolio/src/model/author.dart';
 import 'package:portfolio/src/pages/404_error.dart';
 import 'package:portfolio/src/pages/about_me.dart';
 import 'package:portfolio/src/pages/experiences.dart';
@@ -10,6 +9,7 @@ import 'package:portfolio/src/pages/portfolio_code.dart';
 import 'package:portfolio/src/pages/skills.dart';
 import 'settings/settings_controller.dart';
 import 'pages/settings.dart';
+import 'package:portfolio/src/storage/local_storage.dart';
 
 class MyApp extends StatefulWidget {
   final SettingsController settingsController;
@@ -178,25 +178,27 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                     ), */
                     Builder(
                       builder: (BuildContext _) {
-                        switch (routeSettings.name) {
-                          case LandingPage.routeName:
-                            return RefreshIndicator(
-                              onRefresh: () => Future.delayed(Duration(milliseconds: 10)),
-                              child: const LandingPage(page: 1, numberOfPages: numberOfPages),
-                            );
-                          case AboutMe.routeName:
-                            return const AboutMe(page: 2, numberOfPages: numberOfPages);
-                          case Experiences.routeName:
-                            return const Experiences(page: 3, numberOfPages: numberOfPages);
-                          case Skills.routeName:
-                            return const Skills(page: 4, numberOfPages: numberOfPages);
-                          case PortfolioCode.routeName:
-                            return const PortfolioCode(page: 5, numberOfPages: numberOfPages);
-                          case SettingsView.routeName:
-                            return SettingsView(controller: widget.settingsController);
+                        try {
+                          switch (routeSettings.name) {
+                            case LandingPage.routeName:
+                              return LandingPage(page: 1, numberOfPages: numberOfPages);
+                            case AboutMe.routeName:
+                              return const AboutMe(page: 2, numberOfPages: numberOfPages);
+                            case ExperiencesPage.routeName:
+                              return const ExperiencesPage(page: 3, numberOfPages: numberOfPages);
+                            case Skills.routeName:
+                              return const Skills(page: 4, numberOfPages: numberOfPages);
+                            case PortfolioCode.routeName:
+                              return const PortfolioCode(page: 5, numberOfPages: numberOfPages);
+                            case SettingsView.routeName:
+                              return SettingsView(controller: widget.settingsController);
 
-                          default:
-                            return const Error404();
+                            default:
+                              return const Error404();
+                          }
+                        } catch (e) {
+                          clearLocalStorage();
+                          return const Error404();
                         }
                       },
                     ),

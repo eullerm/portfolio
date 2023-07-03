@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/src/api/sheets/author_sheets_api.dart';
+import 'package:portfolio/src/api/sheets/experience_sheets_api.dart';
 import 'package:portfolio/src/model/author.dart';
+import 'package:portfolio/src/model/experience.dart';
 import 'package:portfolio/src/responsive/responsive.dart';
-import 'package:portfolio/src/storage/shared_preferences.dart';
+import 'package:portfolio/src/storage/local_storage.dart';
 import 'package:portfolio/src/widgets/custom_dropdown.dart';
 import 'package:portfolio/src/widgets/enhanced_card.dart';
 import 'package:portfolio/src/widgets/header.dart';
@@ -24,20 +26,9 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   final language = ValueNotifier({'portuguese': 'Português'});
   final dropLanguageValues = {'english': 'English', 'portuguese': 'Português'};
-  Map cv = {
-    'english': Uri(
-      scheme: 'https',
-      host: 'drive.google.com',
-      path: '/file/d/1W0ODUlfJDdTEcYXN3D0Gplyh6PiVzLuV/view',
-    ),
-    'portuguese': Uri(
-      scheme: 'https',
-      host: 'drive.google.com',
-      path: '/file/d/1cD850ORC9c-16mOYbCz549h5cQUrieby/view',
-    )
-  };
 
-  Author? author;
+  late Author author;
+  late Experiences experiences;
 
   void navigateTo(String path, {Object? arguments}) {
     Navigator.pushNamed(context, path, arguments: arguments);
@@ -53,23 +44,33 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     author = Provider.of<Author>(context, listen: false);
-    if (author != null) {
-      language.value = {author!.language: dropLanguageValues[author!.language]!};
-    }
-    language.addListener(() => getAuthor());
+    experiences = Provider.of<Experiences>(context, listen: false);
+
+    language.value = {author.language: dropLanguageValues[author.language]!};
+
+    language.addListener(() {
+      getAuthor();
+      getExperiences();
+    });
     getAuthor();
   }
 
   Future getAuthor() async {
-    author?.update(await AuthorSheetsApi.getByLanguage(language.value.keys.first));
-    saveObjectToPrefs('author', author?.toJson() ?? '');
+    author.update(await AuthorSheetsApi.getByLanguage(language.value.keys.first));
+    saveObject('author', author.toJson());
+  }
+
+  Future getExperiences() async {
+    experiences.update(await ExperienceSheetsApi.getByLanguage(language.value.keys.first));
+    saveObject('experiences', experiences.toJson());
   }
 
   @override
   Widget build(BuildContext context) {
     Responsive responsive = Responsive(context: context);
-    context.watch<Author?>();
-    author = context.read<Author?>();
+    context.watch<Author>();
+    author = context.read<Author>();
+    print('Author Landing Page: ${author}');
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
@@ -108,7 +109,11 @@ class _LandingPageState extends State<LandingPage> {
               children: [
                 PixelatedButton(
                   title: 'Curriculum',
-                  onClick: () => openAnotherPage(cv[language.value.keys.first]),
+                  onClick: () => openAnotherPage(Uri(
+                    scheme: 'https',
+                    host: 'drive.google.com',
+                    path: author.cvPath,
+                  )),
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
                 SizedBox(
@@ -252,7 +257,7 @@ class _LandingPageState extends State<LandingPage> {
         SelectableText.rich(
           textAlign: textAlign,
           TextSpan(
-            text: author?.name,
+            text: author.name,
             style: Theme.of(context).textTheme.displayLarge,
           ),
         ),
@@ -262,7 +267,7 @@ class _LandingPageState extends State<LandingPage> {
         SelectableText.rich(
           textAlign: textAlign,
           TextSpan(
-            text: author?.role,
+            text: author.role,
             style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
