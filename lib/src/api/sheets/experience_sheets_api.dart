@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:gsheets/gsheets.dart';
 import 'package:portfolio/src/model/experience.dart';
 
@@ -10,7 +8,7 @@ class ExperienceSheetsApi {
     try {
       _experienceSheet = await _getWorkSheet(spreadsheet, page: page);
     } catch (e) {
-      print('Init error: $e');
+      print('Experience api error: $e');
     }
   }
 
@@ -26,6 +24,7 @@ class ExperienceSheetsApi {
 
     final response = await _experienceSheet!.values.map.allRows();
     final filteredResponse = response != null ? response.where((row) => row['language'] == language).map((row) => row).toList() : [];
+    print(filteredResponse);
     return response == null ? null : Experiences.fromMap(filteredResponse);
   }
 }

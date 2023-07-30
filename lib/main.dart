@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/src/api/sheets/sheets_api.dart';
 import 'package:portfolio/src/model/author.dart';
 import 'package:portfolio/src/model/experience.dart';
+import 'package:portfolio/src/model/skills.dart';
 import 'package:portfolio/src/storage/local_storage.dart';
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
@@ -27,22 +28,27 @@ void main() async {
   String authorJson = await getObject('author');
   String experiencesJson = await getObject('experiences');
   String languageJson = await getObject('language');
-  String lastFetch = await getObject('lastFetch');
+  String lastFetchJson = await getObject('lastFetch');
+  String skillsJson = await getObject('skills');
 
-  if (lastFetch.isEmpty || DateTime.now().difference(DateTime.parse(lastFetch)).inDays > 7) {
+  if (lastFetchJson.isEmpty || DateTime.now().difference(DateTime.parse(lastFetchJson)).inDays > 7) {
     saveObject('lastFetch', DateTime.now().toString());
   }
 
-  if (languageJson.isEmpty || lastFetch.isEmpty || DateTime.now().difference(DateTime.parse(lastFetch)).inDays > 7) {
+  if (languageJson.isEmpty || lastFetchJson.isEmpty || DateTime.now().difference(DateTime.parse(lastFetchJson)).inDays > 7) {
     saveObject('language', jsonEncode({'portuguese': 'Português'}));
   }
-  if (authorJson.isEmpty || lastFetch.isEmpty || DateTime.now().difference(DateTime.parse(lastFetch)).inDays > 7) {
+  if (authorJson.isEmpty || lastFetchJson.isEmpty || DateTime.now().difference(DateTime.parse(lastFetchJson)).inDays > 7) {
     authorJson = (await SheetsApi.getAuthor(language: 'portuguese'))?.toJson() ?? '';
     saveObject('author', authorJson);
   }
-  if (experiencesJson.isEmpty || lastFetch.isEmpty || DateTime.now().difference(DateTime.parse(lastFetch)).inDays > 7) {
+  if (experiencesJson.isEmpty || lastFetchJson.isEmpty || DateTime.now().difference(DateTime.parse(lastFetchJson)).inDays > 7) {
     experiencesJson = (await SheetsApi.getExperiences(language: 'portuguese'))?.toJson() ?? '';
     saveObject('experiences', experiencesJson);
+  }
+  if (skillsJson.isEmpty || lastFetchJson.isEmpty || DateTime.now().difference(DateTime.parse(lastFetchJson)).inDays > 7) {
+    skillsJson = (await SheetsApi.getSkills())?.toJson() ?? '';
+    saveObject('skills', skillsJson);
   }
 
   runApp(

@@ -6,7 +6,7 @@ import 'package:portfolio/src/pages/about_me.dart';
 import 'package:portfolio/src/pages/experiences.dart';
 import 'package:portfolio/src/pages/landing_page.dart';
 import 'package:portfolio/src/pages/portfolio_code.dart';
-import 'package:portfolio/src/pages/skills.dart';
+import 'package:portfolio/src/pages/skills_page.dart';
 import 'settings/settings_controller.dart';
 import 'pages/settings.dart';
 import 'package:portfolio/src/storage/local_storage.dart';
@@ -186,8 +186,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                               return const AboutMe(page: 2, numberOfPages: numberOfPages);
                             case ExperiencesPage.routeName:
                               return const ExperiencesPage(page: 3, numberOfPages: numberOfPages);
-                            case Skills.routeName:
-                              return const Skills(page: 4, numberOfPages: numberOfPages);
+                            case SkillsPage.routeName:
+                              return const SkillsPage(page: 4, numberOfPages: numberOfPages);
                             case PortfolioCode.routeName:
                               return const PortfolioCode(page: 5, numberOfPages: numberOfPages);
                             case SettingsView.routeName:

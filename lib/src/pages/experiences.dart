@@ -19,51 +19,6 @@ class ExperiencesPage extends StatefulWidget {
 }
 
 class _ExperiencesPageState extends State<ExperiencesPage> {
-  /*List<Map> experiences = [
-    {
-      'local': 'Pibit',
-      'description': 'Realizei todas as etapas do desenvolvimento de um aplicativo, tais como:',
-      'listOfDescription': [
-        'Estruturação das ideias;',
-        'Especificação do aplicativo;',
-        'Escolha da tecnologia;',
-        'Desenvolvimento;',
-        'Prototipação;',
-        'Testes.',
-      ],
-      'startDate': 'Out de 2019',
-      'endDate': 'Out de 2021',
-      'seeMore': '/pibit'
-    },
-    {
-      'local': 'Exablack',
-      'description': 'Atuei em e-commerces que utilizavam phtml e magento, realizando:',
-      'listOfDescription': [
-        'Desenvolvimento;',
-        'Manutenção;',
-        'Testes;',
-        'Suporte técnico.',
-      ],
-      'startDate': 'Nov de 2020',
-      'endDate': 'Jul de 2021',
-      'seeMore': null
-    },
-    {
-      'local': 'Wikki Brasil',
-      'description': 'Atuo no desenvolvendo full stack de aplicações web com tecnologias como:',
-      'listOfDescription': [
-        'React.js;',
-        'Typescript;',
-        'Mongodb;',
-        'Next.js.',
-      ],
-      'startDate': 'Jun de 2022',
-      'endDate': null,
-      'seeMore': null
-    },
-  ];
-*/
-
   late Experiences listOfExperience;
 
   @override
@@ -91,7 +46,7 @@ class _ExperiencesPageState extends State<ExperiencesPage> {
         child: Header(
           page: widget.page,
           numberOfPages: widget.numberOfPages,
-          leftButtonPath: '',
+          leftButtonPath: '/about-me',
           rightButtonPath: '/skills',
         ),
       ),

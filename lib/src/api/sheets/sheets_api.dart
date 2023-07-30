@@ -1,8 +1,11 @@
 import 'package:gsheets/gsheets.dart';
 import 'package:portfolio/src/api/sheets/author_sheets_api.dart';
 import 'package:portfolio/src/api/sheets/experience_sheets_api.dart';
+import 'package:portfolio/src/api/sheets/skills_sheets_api.dart';
 import 'package:portfolio/src/model/author.dart';
 import 'package:portfolio/src/model/experience.dart';
+
+import '../../model/skills.dart';
 
 class SheetsApi {
   static const _credentials = r'''
@@ -24,6 +27,7 @@ class SheetsApi {
   static Map<String, int> worksheets = {
     'author': 815127933,
     'experiences': 1691098089,
+    'skills': 83442957,
   };
 
   static Future init() async {
@@ -31,8 +35,9 @@ class SheetsApi {
       Spreadsheet spreadsheet = await _gsheets.spreadsheet(_spreadsheetId);
       AuthorSheetsApi.init(spreadsheet: spreadsheet, page: worksheets['author']!);
       ExperienceSheetsApi.init(spreadsheet: spreadsheet, page: worksheets['experiences']!);
+      SkillsSheetsApi.init(spreadsheet: spreadsheet, page: worksheets['skills']!);
     } catch (e) {
-      print('Init error: $e');
+      print('Sheets api error: $e');
     }
   }
 
@@ -42,5 +47,9 @@ class SheetsApi {
 
   static Future<Experiences?> getExperiences({required String language}) {
     return ExperienceSheetsApi.getByLanguage(language);
+  }
+
+  static Future<Skills?> getSkills() {
+    return SkillsSheetsApi.get();
   }
 }

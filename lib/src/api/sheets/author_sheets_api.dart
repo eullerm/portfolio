@@ -8,7 +8,7 @@ class AuthorSheetsApi {
     try {
       _authorSheet = await _getWorkSheet(spreadsheet, page: page);
     } catch (e) {
-      print('Init error: $e');
+      print('Author api error: $e');
     }
   }
 

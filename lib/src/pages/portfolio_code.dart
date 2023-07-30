@@ -62,7 +62,7 @@ class _PortfolioCodeState extends State<PortfolioCode> {
         child: Header(
           page: widget.page,
           numberOfPages: widget.numberOfPages,
-          leftButtonPath: '',
+          leftButtonPath: '/skills',
           rightButtonPath: '/experiences',
         ),
       ),

@@ -48,7 +48,7 @@ class _AboutMeState extends State<AboutMe> {
         child: Header(
           page: widget.page,
           numberOfPages: widget.numberOfPages,
-          leftButtonPath: '',
+          leftButtonPath: '/landing-page',
           rightButtonPath: '/experiences',
         ),
       ),
