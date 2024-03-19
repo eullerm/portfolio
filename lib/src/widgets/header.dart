@@ -64,7 +64,7 @@ class _HeaderState extends State<Header> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Visibility(
-              visible: widget.needLeftButton && widget.needLeftButton,
+              visible: widget.needLeftButton && widget.leftButtonPath.isNotEmpty,
               child: BoxButton(
                 onClick: () => navigateTo(widget.leftButtonPath),
                 child: EnhancedContainer(
@@ -90,7 +90,7 @@ class _HeaderState extends State<Header> {
               ),
             ),
             Visibility(
-              visible: widget.needLeftButton && widget.needLeftButton,
+              visible: widget.needRightButton && widget.rightButtonPath.isNotEmpty,
               child: BoxButton(
                 onClick: () => navigateTo(widget.rightButtonPath),
                 child: EnhancedContainer(
