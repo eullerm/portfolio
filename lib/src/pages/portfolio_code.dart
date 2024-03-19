@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/src/model/projects.dart';
 import 'package:portfolio/src/responsive/responsive.dart';
+import 'package:portfolio/src/storage/local_storage.dart';
 import 'package:portfolio/src/widgets/box_button.dart';
 import 'package:portfolio/src/widgets/enhanced_container.dart';
 import 'package:portfolio/src/widgets/header.dart';
@@ -17,20 +19,16 @@ class PortfolioCode extends StatefulWidget {
 }
 
 class _PortfolioCodeState extends State<PortfolioCode> {
-  List<Map> projects = [
-    {
-      'name': 'Notisamu',
-      'path': Uri(scheme: 'https', host: 'github.com', path: '/eullerm/NotiSAMU'),
-    },
-    {
-      'name': 'Notisamu',
-      'path': Uri(scheme: 'https', host: 'github.com', path: '/eullerm/NotiSAMU'),
-    },
-    {
-      'name': 'Notisamu',
-      'path': Uri(scheme: 'https', host: 'github.com', path: '/eullerm/NotiSAMU'),
-    },
-  ];
+  List<Project> projectsData = [];
+
+  Future<void> fetchProjectsData() async {
+    String projectsResponse = await getObject('projects');
+
+    setState(() {
+      projectsData = Projects.fromJson(projectsResponse).projects;
+    });
+  }
+
   late ScrollController listController = ScrollController();
   void navigateTo(String path, {Object? arguments}) {
     if (path.isNotEmpty) {
@@ -47,6 +45,12 @@ class _PortfolioCodeState extends State<PortfolioCode> {
   }
 
   @override
+  void initState() {
+    fetchProjectsData();
+    super.initState();
+  }
+
+  @override
   void dispose() {
     listController.dispose();
     super.dispose();
@@ -55,6 +59,7 @@ class _PortfolioCodeState extends State<PortfolioCode> {
   @override
   Widget build(BuildContext context) {
     Responsive responsive = Responsive(context: context);
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
@@ -63,7 +68,7 @@ class _PortfolioCodeState extends State<PortfolioCode> {
           page: widget.page,
           numberOfPages: widget.numberOfPages,
           leftButtonPath: '/skills',
-          rightButtonPath: '/experiences',
+          rightButtonPath: '/thanks-page',
         ),
       ),
       body: Container(
@@ -104,17 +109,17 @@ class _PortfolioCodeState extends State<PortfolioCode> {
             thumbVisibility: true,
             child: ListView.builder(
               controller: listController,
-              itemCount: (projects.length / 3).ceil(),
+              itemCount: (projectsData.length / 3).ceil(),
               itemBuilder: (BuildContext context, int index) {
                 int startIndex = index * 3;
                 int endIndex = startIndex + 3;
-                List<Map> currentData = projects.sublist(startIndex, endIndex > projects.length ? projects.length : endIndex);
+                List<Project> currentData = projectsData.sublist(startIndex, endIndex > projectsData.length ? projectsData.length : endIndex);
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: currentData
                       .map(
                         (data) => BoxButton(
-                          onClick: () => openAnotherPage(data['path']),
+                          onClick: () => openAnotherPage(Uri(scheme: data.scheme, host: data.host, path: data.path)),
                           child: EnhancedContainer(
                             width: cardSize,
                             height: cardSize,
@@ -123,7 +128,7 @@ class _PortfolioCodeState extends State<PortfolioCode> {
                               child: SelectableText.rich(
                                 textAlign: TextAlign.center,
                                 TextSpan(
-                                  text: data['name'],
+                                  text: data.name,
                                   style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                               ),
@@ -158,17 +163,17 @@ class _PortfolioCodeState extends State<PortfolioCode> {
               thumbVisibility: true,
               child: ListView.builder(
                 controller: listController,
-                itemCount: (projects.length / 3).ceil(),
+                itemCount: (projectsData.length / 3).ceil(),
                 itemBuilder: (BuildContext context, int index) {
                   int startIndex = index * 3;
                   int endIndex = startIndex + 3;
-                  List<Map> currentData = projects.sublist(startIndex, endIndex > projects.length ? projects.length : endIndex);
+                  List<Project> currentData = projectsData.sublist(startIndex, endIndex > projectsData.length ? projectsData.length : endIndex);
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: currentData
                         .map(
                           (data) => BoxButton(
-                            onClick: () => openAnotherPage(data['path']),
+                            onClick: () => openAnotherPage(Uri(scheme: data.scheme, host: data.host, path: data.path)),
                             child: Center(
                               child: EnhancedContainer(
                                 width: cardSize,
@@ -178,7 +183,7 @@ class _PortfolioCodeState extends State<PortfolioCode> {
                                   child: SelectableText.rich(
                                     textAlign: TextAlign.center,
                                     TextSpan(
-                                      text: data['name'],
+                                      text: data.name,
                                       style: Theme.of(context).textTheme.bodyLarge,
                                     ),
                                   ),
@@ -217,10 +222,10 @@ class _PortfolioCodeState extends State<PortfolioCode> {
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: projects
+                children: projectsData
                     .map(
                       (data) => BoxButton(
-                        onClick: () => openAnotherPage(data['path']),
+                        onClick: () => openAnotherPage(Uri(scheme: data.scheme, host: data.host, path: data.path)),
                         child: EnhancedContainer(
                           width: cardSize,
                           height: cardSize,
@@ -229,7 +234,7 @@ class _PortfolioCodeState extends State<PortfolioCode> {
                             child: SelectableText.rich(
                               textAlign: TextAlign.center,
                               TextSpan(
-                                text: data['name'],
+                                text: data.name,
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ),

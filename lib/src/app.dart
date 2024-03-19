@@ -7,6 +7,7 @@ import 'package:portfolio/src/pages/experiences.dart';
 import 'package:portfolio/src/pages/landing_page.dart';
 import 'package:portfolio/src/pages/portfolio_code.dart';
 import 'package:portfolio/src/pages/skills_page.dart';
+import 'package:portfolio/src/pages/thanks_page.dart';
 import 'settings/settings_controller.dart';
 import 'pages/settings.dart';
 import 'package:portfolio/src/storage/local_storage.dart';
@@ -149,7 +150,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                 Animation<double> animation,
                 Animation<double> secondaryAnimation,
               ) {
-                const double numberOfPages = 5;
+                const double numberOfPages = 6;
                 return Stack(
                   children: [
                     Image.asset(
@@ -190,6 +191,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                               return const SkillsPage(page: 4, numberOfPages: numberOfPages);
                             case PortfolioCode.routeName:
                               return const PortfolioCode(page: 5, numberOfPages: numberOfPages);
+                            case ThanksPage.routeName:
+                              return ThanksPage(page: 6, numberOfPages: numberOfPages);
                             case SettingsView.routeName:
                               return SettingsView(controller: widget.settingsController);
 

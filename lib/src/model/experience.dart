@@ -18,7 +18,7 @@ class Experiences extends ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'experiences': experiences.map((Experience experience) => experience.toMap()),
+      'experiences': experiences.map((Experience experience) => experience.toMap()).toList(),
     };
   }
 

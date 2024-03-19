@@ -88,7 +88,7 @@ class _ExperiencesPageState extends State<ExperiencesPage> {
                 itemBuilder: (BuildContext context, int index) {
                   return enhacedCard(
                     width: width - 8,
-                    height: MediaQuery.of(context).size.height - kToolbarHeight - 250 - height,
+                    height: MediaQuery.of(context).size.height - 250 - height,
                     margin: EdgeInsets.only(bottom: 16),
                     trophySize: 30,
                     experience: listOfExperience.experiences[index],
@@ -105,7 +105,7 @@ class _ExperiencesPageState extends State<ExperiencesPage> {
   Widget tablet() {
     double width = MediaQuery.of(context).size.width * 0.9;
     double height = MediaQuery.of(context).size.height * 0.1;
-    double cardHeight = MediaQuery.of(context).size.height - kToolbarHeight - 180 - height;
+    double cardHeight = MediaQuery.of(context).size.height - 180 - height;
     double cardWidth = MediaQuery.of(context).size.width * 0.4;
     if (cardHeight < cardWidth) {
       cardHeight = cardWidth;
@@ -168,7 +168,7 @@ class _ExperiencesPageState extends State<ExperiencesPage> {
                     .map(
                       (experience) => enhacedCard(
                         width: MediaQuery.of(context).size.width / 4,
-                        height: MediaQuery.of(context).size.height - kToolbarHeight - 250 - height,
+                        height: MediaQuery.of(context).size.height - 250 - height,
                         experience: experience,
                       ),
                     )
@@ -236,7 +236,7 @@ class _ExperiencesPageState extends State<ExperiencesPage> {
             '${experience?.startDate}\n${experience?.endDate ?? 'Atualmente'}',
           ),
           Opacity(
-            opacity: experience?.seeMore != null ? 1 : 0,
+            opacity: experience?.seeMore != null && experience!.seeMore.isNotEmpty ? 1 : 0,
             child: PixelatedButton(
               title: 'Veja mais',
               onClick: () => navigateTo(experience!.seeMore),

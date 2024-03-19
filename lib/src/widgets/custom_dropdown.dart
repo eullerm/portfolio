@@ -78,6 +78,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                       ),
                       Divider(
                         height: 1,
+                        color: Colors.black,
                       ),
                     ],
                   ),

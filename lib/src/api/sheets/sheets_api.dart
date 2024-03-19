@@ -1,11 +1,14 @@
 import 'package:gsheets/gsheets.dart';
 import 'package:portfolio/src/api/sheets/author_sheets_api.dart';
 import 'package:portfolio/src/api/sheets/experience_sheets_api.dart';
+import 'package:portfolio/src/api/sheets/projects_sheets_api.dart';
 import 'package:portfolio/src/api/sheets/skills_sheets_api.dart';
+import 'package:portfolio/src/api/sheets/thanks_sheets_api.dart';
 import 'package:portfolio/src/model/author.dart';
 import 'package:portfolio/src/model/experience.dart';
-
-import '../../model/skills.dart';
+import 'package:portfolio/src/model/projects.dart';
+import 'package:portfolio/src/model/skills.dart';
+import 'package:portfolio/src/model/thanks.dart';
 
 class SheetsApi {
   static const _credentials = r'''
@@ -28,6 +31,8 @@ class SheetsApi {
     'author': 815127933,
     'experiences': 1691098089,
     'skills': 83442957,
+    'projects': 111180585,
+    'thanks': 299398227,
   };
 
   static Future init() async {
@@ -36,6 +41,8 @@ class SheetsApi {
       AuthorSheetsApi.init(spreadsheet: spreadsheet, page: worksheets['author']!);
       ExperienceSheetsApi.init(spreadsheet: spreadsheet, page: worksheets['experiences']!);
       SkillsSheetsApi.init(spreadsheet: spreadsheet, page: worksheets['skills']!);
+      ProjectsSheetsApi.init(spreadsheet: spreadsheet, page: worksheets['projects']!);
+      ThanksSheetsApi.init(spreadsheet: spreadsheet, page: worksheets['thanks']!);
     } catch (e) {
       print('Sheets api error: $e');
     }
@@ -51,5 +58,13 @@ class SheetsApi {
 
   static Future<Skills?> getSkills() {
     return SkillsSheetsApi.get();
+  }
+
+  static Future<Projects?> getProjects() {
+    return ProjectsSheetsApi.get();
+  }
+
+  static Future<Thanks?> getThanks({required String language}) {
+    return ThanksSheetsApi.getByLanguage(language);
   }
 }

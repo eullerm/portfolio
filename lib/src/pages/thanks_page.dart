@@ -14,24 +14,23 @@ import 'package:portfolio/src/widgets/pixelated_button.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class LandingPage extends StatefulWidget {
-  static const routeName = '/landing-page';
+class ThanksPage extends StatefulWidget {
+  static const routeName = '/thanks-page';
   final Object? arguments;
   final double page;
   final double numberOfPages;
-  const LandingPage({super.key, this.arguments, required this.page, required this.numberOfPages});
+  const ThanksPage({super.key, this.arguments, required this.page, required this.numberOfPages});
 
   @override
-  State<LandingPage> createState() => _LandingPageState();
+  State<ThanksPage> createState() => _ThanksPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
-  final language = ValueNotifier({'portuguese': 'Português'});
-  final dropLanguageValues = {'english': 'English', 'portuguese': 'Português'};
-
+class _ThanksPageState extends State<ThanksPage> {
   late Author author;
   late Experiences experiences;
   late Thanks thanks;
+  final language = ValueNotifier({'portuguese': 'Português'});
+  final dropLanguageValues = {'english': 'English', 'portuguese': 'Português'};
 
   void navigateTo(String path, {Object? arguments}) {
     Navigator.pushNamed(context, path, arguments: arguments);
@@ -45,19 +44,14 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   void initState() {
-    super.initState();
     author = Provider.of<Author>(context, listen: false);
-    experiences = Provider.of<Experiences>(context, listen: false);
-    thanks = Provider.of<Thanks>(context, listen: false);
-
     language.value = {author.language: dropLanguageValues[author.language]!};
-
     language.addListener(() {
       getAuthor();
       getExperiences();
       getThanks();
     });
-    getAuthor();
+    super.initState();
   }
 
   Future getAuthor() async {
@@ -78,8 +72,8 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     Responsive responsive = Responsive(context: context);
-    context.watch<Author>();
-    author = context.read<Author>();
+    context.watch<Thanks>();
+    thanks = context.read<Thanks>();
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -88,7 +82,7 @@ class _LandingPageState extends State<LandingPage> {
         child: Header(
           page: widget.page,
           numberOfPages: widget.numberOfPages,
-          needLeftButton: false,
+          leftButtonPath: '/portfolio-code',
           needRightButton: false,
         ),
       ),
@@ -245,8 +239,8 @@ class _LandingPageState extends State<LandingPage> {
         child: PixelatedButton(
           width: width,
           height: height,
-          title: 'Start',
-          onClick: () => navigateTo('/about-me'),
+          title: 'Home',
+          onClick: () => navigateTo('/landing-page'),
         ),
       ),
       Container(
@@ -254,8 +248,8 @@ class _LandingPageState extends State<LandingPage> {
         child: PixelatedButton(
           width: width,
           height: height,
-          title: 'Menu',
-          onClick: () => print('menu'),
+          title: 'Recursos',
+          onClick: () => print('recursos'),
         ),
       ),
     ];
@@ -267,7 +261,7 @@ class _LandingPageState extends State<LandingPage> {
         SelectableText.rich(
           textAlign: textAlign,
           TextSpan(
-            text: author.name,
+            text: thanks.thanksTitle,
             style: Theme.of(context).textTheme.displayLarge,
           ),
         ),
@@ -277,7 +271,7 @@ class _LandingPageState extends State<LandingPage> {
         SelectableText.rich(
           textAlign: textAlign,
           TextSpan(
-            text: author.role,
+            text: thanks.thanksPhrase,
             style: Theme.of(context).textTheme.displaySmall,
           ),
         ),

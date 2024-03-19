@@ -67,19 +67,22 @@ class EnhancedCard extends StatelessWidget {
                     Visibility(
                       visible: content != null,
                       child: Flexible(
-                        flex: 2,
+                        flex: 5,
                         child: Align(
                           alignment: Alignment.center,
-                          child: Padding(
-                            padding: content != null ? const EdgeInsets.all(8) : const EdgeInsets.all(0),
-                            child: Scrollbar(
-                              thumbVisibility: true,
-                              child: SingleChildScrollView(child: content ?? Container()),
+                          child: Scrollbar(
+                            thumbVisibility: true,
+                            child: SingleChildScrollView(
+                              child: Padding(
+                                padding: content != null ? const EdgeInsets.all(8) : const EdgeInsets.all(0),
+                                child: content ?? Container(),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
+                    Divider(height: 1, color: Colors.black),
                     Visibility(
                       visible: footer != null,
                       child: Flexible(

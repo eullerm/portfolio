@@ -8,6 +8,7 @@ Future<void> saveObject(String key, String json) async {
 }
 
 Future<String> getObject(String key) async {
+  await _localStorage.ready;
   final object = _localStorage.getItem(key);
   return object ?? '';
 }
